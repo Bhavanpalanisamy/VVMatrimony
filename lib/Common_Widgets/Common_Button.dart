@@ -17,10 +17,10 @@ Widget CommonElevatedButton(
 ){
   return ElevatedButton(
     style: ElevatedButton.styleFrom(
-      backgroundColor: blue3,
+      backgroundColor: pink1,
       minimumSize: Size(double.infinity, 50),
       elevation: 9,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
     ),
     onPressed: onPress,
     child: Text(

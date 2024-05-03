@@ -1,33 +1,30 @@
 import 'package:flutter/material.dart';
 import 'Common_Colors.dart';
 
+//TEXT FIELD HINT STYLE
+TextStyle HintST=TextStyle( fontFamily: 'Roboto', fontSize: 15, color: Color.fromRGBO(78, 78, 78, 1), fontWeight: FontWeight.w400);
 
-TextStyle LoginT=TextStyle( fontFamily: 'Roboto', fontSize: 24, color: Color.fromRGBO(52, 52, 52, 1), fontWeight: FontWeight.w700);
-TextStyle appTitle=TextStyle( fontFamily: 'Roboto', fontSize: 18, color: blue3, fontWeight: FontWeight.w500);
+//HEADING STYLE
+TextStyle Textfield_Style1=TextStyle( fontFamily: 'Inter', fontSize: 16, color: Colors.black, fontWeight: FontWeight.w600);
+TextStyle Textfield_Style2=TextStyle( fontFamily: 'Inter', fontSize: 24, color: Colors.black, fontWeight: FontWeight.w600);
+//SUB CONTENTS
+TextStyle sub_ContentST=TextStyle( fontFamily: 'Inter', fontSize: 14, color: Color.fromRGBO(51, 51, 51, 1), fontWeight: FontWeight.w400);
+
+//onclicked Text
+TextStyle onClicked_TextC=TextStyle( fontFamily: 'Inter', fontSize: 14, color: Colors.black, fontWeight: FontWeight.w400);
+TextStyle onClicked_TextB=TextStyle( fontFamily: 'Inter', fontSize: 14, color: pink1, fontWeight: FontWeight.w600);
+
+//BUTTON TEXT
+TextStyle ButtonT=TextStyle( fontFamily: 'Inter', fontSize: 18, color: white1, fontWeight: FontWeight.w600);
+
+TextStyle appTitle=TextStyle( fontFamily: 'Roboto', fontSize: 18, color: Black, fontWeight: FontWeight.w500);
 TextStyle appTitle2=TextStyle( fontFamily: 'Roboto', fontSize: 18, color: white1, fontWeight: FontWeight.w500);
 TextStyle notificationTitle=TextStyle( fontFamily: 'Nunito', fontSize: 16, color: blue3, fontWeight: FontWeight.w700);
 TextStyle ProuctT=TextStyle( fontFamily: 'Roboto', fontSize: 20, color: Color.fromRGBO(52, 52, 52, 1), fontWeight: FontWeight.w700);
 TextStyle ProductPriceT=TextStyle( fontFamily: 'Roboto', fontSize: 18, color: Color.fromRGBO(52, 52, 52, 1), fontWeight: FontWeight.w500);
-TextStyle phoneHT=TextStyle( fontFamily: 'Roboto', fontSize: 16, color: Color.fromRGBO(140, 140, 140, 1), fontWeight: FontWeight.w400);
-TextStyle Textfield_Style=TextStyle( fontFamily: 'Inter', fontSize: 14, color: Colors.black, fontWeight: FontWeight.w400);
-TextStyle Textfield_Style2=TextStyle( fontFamily: 'Inter', fontSize: 14, color: Colors.black, fontWeight: FontWeight.w500);
+
 TextStyle StarT=TextStyle(color: Colors.red,fontSize: 25);
 
-TextStyle discountT=TextStyle( fontFamily: 'Inter', fontSize: 14, color: green7, fontWeight: FontWeight.w500);
-TextStyle TaxT=TextStyle( fontFamily: 'Inter', fontSize: 14, color: red6, fontWeight: FontWeight.w500);
-TextStyle ButtonT=TextStyle( fontFamily: 'Inter', fontSize: 16, color: white1, fontWeight: FontWeight.w500);
-TextStyle ButtonT1=TextStyle( fontFamily: 'Inter', fontSize: 12, color: blue3, fontWeight: FontWeight.w700);
-TextStyle cardT=TextStyle( fontFamily: 'Inter', fontSize: 12, color: black5, fontWeight: FontWeight.w700);
-TextStyle logintxt=TextStyle( fontFamily: 'Inter', fontSize: 24, color: Color.fromRGBO(0, 0, 0, 1), fontWeight: FontWeight.w700);
-TextStyle TitleT=TextStyle( fontFamily: 'Inter', fontSize: 24, color: Color.fromRGBO(0, 0, 0, 1), fontWeight: FontWeight.w700);
-TextStyle inboxcompany=TextStyle( fontFamily: 'Inter', fontSize: 18, color: Color.fromRGBO(0, 0, 0, 1), fontWeight: FontWeight.w500);
-TextStyle TBlack=TextStyle( fontFamily: 'Inter', fontSize: 20, color: Color.fromRGBO(0, 0, 0, 1), fontWeight: FontWeight.w500);
-TextStyle profileT=TextStyle( fontFamily: 'Inter', fontSize: 22, color: black6, fontWeight: FontWeight.w500);
-TextStyle noDataT1=TextStyle( fontFamily: 'Inter', fontSize: 22, color: Colors.black, fontWeight: FontWeight.w600);
-TextStyle appLoginT=TextStyle( fontFamily: 'Inter', fontSize: 22, color: black4, fontWeight: FontWeight.w500);
-TextStyle signUpT=TextStyle( fontFamily: 'Inter', fontSize: 12, color: blue1, fontWeight: FontWeight.w700);
-TextStyle richtext1=TextStyle( fontFamily: 'Inter', fontSize: 12, color: grey1, fontWeight: FontWeight.w500);
-TextStyle richtext2=TextStyle( fontFamily: 'Inter', fontSize: 12, color: blue3, fontWeight: FontWeight.w700);
 
 
 
@@ -115,47 +112,21 @@ Widget view_All(){
 
 //PRIMARY TITLE
 Widget primary_Title({required String primaryText}){
-  return Text(primaryText,style: primaryTitleT,);
+  return Text(primaryText,style: Textfield_Style2,);
 }
 
-//SUB TITLE
-Widget sub_Title({required String subText,required void Function()? onTap}){
-  return Row(
-    children: [
-      Text(subText,style: subTitleT,),
-      const Spacer(),
-      InkWell(
-        onTap: onTap,
-          child: view_All()),
-    ],
-  );
+//SUB CONTENT TEXT
+Widget sub_contents(context,{required String subText}){
+  return Container(
+      width: MediaQuery.sizeOf(context).width/1.5,
+      child: Text(subText,style: sub_ContentST,maxLines: 2,textAlign: TextAlign.center,));
 }
 
-//PRIMARY VIEWALL
-Widget primary_ViewAll(context,{required String PText}){
-  return Row(
-    children: [
-      Text(PText,style: subTitleT,),
-      const Spacer(),
-      InkWell(
-        onTap: (){
-
-          },
-          child: view_All()),
-    ],
-  );
-}
-//DESCRIPTION TEXT VIEW ALL
-Widget description_ViewAll({required String DText,required void Function()? onTap}){
-  return Row(
-    children: [
-      Text(DText,style: inboxcompany,),
-      const Spacer(),
-      InkWell(
-        onTap: onTap,
-          child: view_All()),
-    ],
-  );
+//ON CLICKED TEXT
+Widget On_Clicked_Text(context,{required String subText,required void Function()? onTap}){
+  return InkWell(
+    onTap: onTap,
+      child: Text(subText,style: sub_ContentST,));
 }
 
 
@@ -171,7 +142,7 @@ Widget Title_Style({required String Title, required bool? isStatus}) {
           // width: 135,
           child: Text(
             Title,
-            style: Textfield_Style2,
+            style: Textfield_Style1,
           ),
         ),
         Text(

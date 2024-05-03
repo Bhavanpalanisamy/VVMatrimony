@@ -26,21 +26,21 @@ Widget textFormField(
         contentPadding:
         EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
         hintText: hintText,
-        hintStyle: phoneHT,
+        hintStyle: HintST,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: Black),
+          borderSide: BorderSide(color: pink1),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: Black),
+          borderSide: BorderSide(color: pink1),
         ),
           fillColor: white1,
         filled: true,
       ),
       onChanged: onChanged,
       textInputAction: TextInputAction.next,
-      style: Textfield_Style,
+      style: Textfield_Style2,
         keyboardType: keyboardtype,
   ),
     );
@@ -84,7 +84,7 @@ Widget textFormField2(
         ),
         onChanged: onChanged,
         textInputAction: TextInputAction.next,
-        style: Textfield_Style,
+        style: Textfield_Style2,
         keyboardType: keyboardtype,
       ),
     );
@@ -104,15 +104,15 @@ Widget TextFieldDatePicker({TextEditingController? Controller,
     decoration: InputDecoration(
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
-        borderSide: BorderSide(color: white1),
+        borderSide: BorderSide(color: pink1),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
-        borderSide: BorderSide(color: white1),
+        borderSide: BorderSide(color: pink1),
       ),
       counterText: "",
       hintText: 'DD / MM / YYYY',
-      helperStyle: phoneHT,
+      helperStyle: HintST,
       prefixIcon: Icon(Icons.calendar_month,
         color:grey1,
         size: 24,),
@@ -156,7 +156,7 @@ Widget textFieldPassword(
         contentPadding:
         EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
         hintText: hintText,
-        hintStyle: phoneHT,
+        hintStyle: HintST,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
         ),
@@ -176,7 +176,7 @@ Widget textFieldPassword(
       onChanged: onChanged,
       textInputAction: TextInputAction.next,
       keyboardType: keyboardtype,
-      style: Textfield_Style,
+      style: Textfield_Style2,
     ),
   );
 }
@@ -206,17 +206,19 @@ Widget textfieldDescription({
           color: Colors.grey,
         ),
         border: OutlineInputBorder(
+          borderSide: BorderSide(color: pink1),
           borderRadius: BorderRadius.circular(10),
+
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: white1),
+          borderSide: BorderSide(color: pink1),
             borderRadius: BorderRadius.circular(10),
         ),
         fillColor: white1,
         filled: true,
       ),
       textInputAction: TextInputAction.next,
-      style: Textfield_Style,
+      style: Textfield_Style2,
     ),
   );
 }
@@ -248,7 +250,7 @@ Widget textFormFieldSearchBar(
           contentPadding:
           EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
           hintText: hintText,
-          hintStyle: phoneHT,
+          hintStyle: HintST,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide(color: white2),
@@ -264,7 +266,7 @@ Widget textFormFieldSearchBar(
 
         onChanged: onChanged,
         textInputAction: TextInputAction.next,
-        style: Textfield_Style,
+        style: Textfield_Style2,
         keyboardType: keyboardtype,
       ),
     );
@@ -304,36 +306,7 @@ Widget textFormFieldSearchBar(
   );
 }
 
-Widget collegeRowTitle(String pathPNG, String companyName,
-    TextStyle textStyle, double imageWidth, double imageHeight) {
-  return Container(
-    child: Row(
-      children: [
-        Container(
-          height: imageHeight,
-          width: imageWidth,
-          child: Image(
-            image: AssetImage("lib/assets/$pathPNG"),
-            fit: BoxFit.contain,
-          ),
-        ),
-        SizedBox(
-          width: 10,
-        ),
-        Expanded(
-          child: Container(
-            child: Text(
-              companyName,
-              style: textStyle,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-        ),
-      ],
-    ),
-  );
-}
+
 
 
 
@@ -348,13 +321,23 @@ Widget dropDownField(context,{required String? value,required List<String>? list
     width: MediaQuery.of(context).size.width,
     decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
+
         color: white1
     ),
     child:  DropdownButtonFormField<String>(
       value: value,
       isExpanded: true,
       decoration:
-      InputDecoration(border: InputBorder.none),
+      InputDecoration(
+        border: OutlineInputBorder(
+          borderSide: BorderSide(color: pink1),
+          borderRadius: BorderRadius.circular(10),
+
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: pink1),
+          borderRadius: BorderRadius.circular(10),
+        ),),
       icon: Padding(
         padding: const EdgeInsets.only(right: 10),
         child: Icon(
@@ -380,101 +363,6 @@ Widget dropDownField(context,{required String? value,required List<String>? list
 
 
 
-class TimePickerFormField extends StatefulWidget {
-  final Function() onValidate;
-  String? time;
-  TimePickerFormField({required this.onValidate,required this.time});
 
-  @override
-  _TimePickerFormFieldState createState() => _TimePickerFormFieldState();
-}
-class _TimePickerFormFieldState extends State<TimePickerFormField> {
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _selectedTime = TimeOfDay.now();
-  // }
-
-  Future<void> _selectTime(BuildContext context) async {
-    TimeOfDay? picked = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.now(),
-    );
-    if (picked != null) {
-      String formattedTime = _formatTime(picked);
-      setState(() {
-        widget.time = formattedTime;
-      });
-      widget.onValidate(); // Call the validation callback
-    }
-  }
-  String _formatTime(TimeOfDay time) {
-    String period = time.period == DayPeriod.am ? 'AM' : 'PM';
-    int hour = time.hourOfPeriod;
-    int minute = time.minute;
-    String formattedHour = hour.toString().padLeft(2, '0');
-    String formattedMinute = minute.toString().padLeft(2, '0');
-    return '$formattedHour:$formattedMinute $period';
-
-}
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      onTap: (){
-        _selectTime(context);
-        },
-      readOnly: true,
-      decoration: InputDecoration(
-        counterText: "",
-        hintText: "HH: MM : AM/PM",
-        hintStyle: TextStyle(
-          fontFamily: "Inter",
-          fontWeight: FontWeight.w400,
-          fontSize: 12.0,
-          color: Colors.grey,
-        ),
-        contentPadding:
-        EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: white2),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: white2),
-        ),
-        fillColor: white1,
-        filled: true,
-        prefixIcon: IconButton(
-          icon: Icon(Icons.access_time_outlined,
-            color:grey1,
-            size: 25,),
-          onPressed: () {
-            _selectTime(context);
-          },
-        ),
-
-      ),
-      onChanged: null,
-        validator: (value) {
-          if (value == "(HH:MM)") {
-            return 'Please select a time';
-          }
-          return null;
-        },
-      textInputAction: TextInputAction.next,
-      style: const TextStyle(
-        fontFamily: "Inter",
-        fontWeight: FontWeight.w400,
-        fontSize: 14.0,
-        color: Colors.black,
-      ),
-    controller: TextEditingController(
-    text: widget.time,
-    ));
-  }
-}
 
 
