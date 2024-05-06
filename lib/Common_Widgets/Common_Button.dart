@@ -18,7 +18,7 @@ Widget CommonElevatedButton(
   return ElevatedButton(
     style: ElevatedButton.styleFrom(
       backgroundColor: pink1,
-      minimumSize: Size(double.infinity, 50),
+      minimumSize: Size(double.infinity, 60),
       elevation: 9,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
     ),

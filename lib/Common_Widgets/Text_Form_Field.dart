@@ -20,7 +20,10 @@ Widget textFormField(
         enabled: isEnabled,
       controller: Controller,
       textCapitalization: TextCapitalization.none,
-      inputFormatters: inputFormatters,
+      inputFormatters: [
+        LengthLimitingTextInputFormatter(10),
+        FilteringTextInputFormatter.digitsOnly
+      ],
       validator: validating,
         decoration: InputDecoration(
         contentPadding:
@@ -45,7 +48,6 @@ Widget textFormField(
   ),
     );
 }
-//white
 Widget textFormField2(
     {TextEditingController? Controller,
       String? Function(String?)? validating,
@@ -58,26 +60,24 @@ Widget textFormField2(
       TextFormField(
         enabled: isEnabled,
         controller: Controller,
-        textCapitalization: TextCapitalization.none,
-        inputFormatters: inputFormatters,
+        textCapitalization: TextCapitalization.characters,
+        inputFormatters: [
+          LengthLimitingTextInputFormatter(10),
+          FilteringTextInputFormatter.singleLineFormatter
+        ],
         validator: validating,
         decoration: InputDecoration(
           contentPadding:
           EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
           hintText: hintText,
-          hintStyle: TextStyle(
-            fontFamily: "Inter",
-            fontWeight: FontWeight.w400,
-            fontSize: 12.0,
-            color: Colors.grey,
-          ),
+          hintStyle: HintST,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide(color: white1),
+            borderSide: BorderSide(color: pink1),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide(color: white1),
+            borderSide: BorderSide(color: pink1),
           ),
           fillColor: white1,
           filled: true,
@@ -358,6 +358,8 @@ Widget dropDownField(context,{required String? value,required List<String>? list
     ),
   );
 }
+
+
 
 
 
