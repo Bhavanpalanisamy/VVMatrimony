@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vvmatrimony/LoginPage_Ui/LoginPage_Screen.dart';
 
 import '../Common_Widgets/Custom_App_Bar.dart';
 import '../utilits/Common_Colors.dart';
@@ -15,40 +16,38 @@ class _GetStartedState extends State<GetStarted> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backGroundColor,
-      appBar: AppBar(
-        title: Text("VV"),
-        backgroundColor: backGroundColor,
-      ),
-      body: Container(
-        height: MediaQuery.sizeOf(context).height,
-        child: Column(
-          children: [
+      body: Column(
+        children: [
 
-            // GROUP IMAGE
+          // GROUP IMAGE
 
-            Container(
-              height: 370,
-              width: MediaQuery.sizeOf(context).width,
-              decoration: BoxDecoration(
-                image: DecorationImage(image: AssetImage("lib/assets/groupimage.png"),
-                    fit: BoxFit.cover),
-              ),
+          Container(
+            height: MediaQuery.sizeOf(context).height/2.5,
+            width: MediaQuery.sizeOf(context).width,
+            decoration: BoxDecoration(
+              image: DecorationImage(image: AssetImage("lib/assets/groupimage.png"),
+                  fit: BoxFit.cover),
             ),
+          ),
 
-            const SizedBox(height: 30,),
+          const SizedBox(height: 30,),
 
-            Text('Discover Love where your \n            story begins.',style: Textfield_Style2,),
-            const SizedBox(height: 30,),
-            Text('Join us to discover your ideal partner \n '
-                'and ignite the sparks of romance in\n                  '
-                ' your journey..',style: Textfield_Style1,),
+          Text('Discover Love where your \n            story begins.',style: Textfield_Style2,),
+          const SizedBox(height: 30,),
+          Text('Join us to discover your ideal partner \n '
+              'and ignite the sparks of romance in\n                  '
+              ' your journey..',style: sub_ContentST,),
 
-        const Spacer(),
+      const Spacer(),
 
-            // BUTTON
+          // BUTTON
 
-            Padding(
-              padding: const EdgeInsets.only(left: 25,right: 25),
+          Padding(
+            padding: const EdgeInsets.only(left: 25,right: 25),
+            child: InkWell(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
+              },
               child: Container(
                 height: 60,width: MediaQuery.sizeOf(context).width,
                 decoration: BoxDecoration(borderRadius: BorderRadius.circular(50),color: pink1),
@@ -73,22 +72,22 @@ class _GetStartedState extends State<GetStarted> {
                 ),
               ),
             ),
+          ),
 
-            // ON CLICK TEXT
+          // ON CLICK TEXT
 
-            const SizedBox(height: 20,),
-            Padding(
-              padding: const EdgeInsets.only(left: 60,right: 60,bottom: 30 ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Don’t have an account?",style: onClicked_TextC,),
-                  Text("Sign Up",style: onClicked_TextB,)
-                ],
-              ),
-            )
-          ],
-        ),
+          const SizedBox(height: 20,),
+          Padding(
+            padding: const EdgeInsets.only(left: 60,right: 60,bottom: 30 ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("Don’t have an account?",style: onClicked_TextC,),
+                Text("Sign Up",style: onClicked_TextB,)
+              ],
+            ),
+          )
+        ],
       ),
     );
   }

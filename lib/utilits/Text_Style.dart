@@ -8,7 +8,7 @@ TextStyle HintST=TextStyle( fontFamily: 'Roboto', fontSize: 15, color: Color.fro
 TextStyle Textfield_Style1=TextStyle( fontFamily: 'Inter', fontSize: 16, color: Colors.black, fontWeight: FontWeight.w600);
 TextStyle Textfield_Style2=TextStyle( fontFamily: 'Inter', fontSize: 24, color: Colors.black, fontWeight: FontWeight.w600);
 //SUB CONTENTS
-TextStyle sub_ContentST=TextStyle( fontFamily: 'Inter', fontSize: 14, color: Color.fromRGBO(51, 51, 51, 1), fontWeight: FontWeight.w400);
+TextStyle sub_ContentST=TextStyle( fontFamily: 'Inter', fontSize: 15, color: Color.fromRGBO(51, 51, 51, 1), fontWeight: FontWeight.w400);
 
 //onclicked Text
 TextStyle onClicked_TextC=TextStyle( fontFamily: 'Inter', fontSize: 14, color: Colors.black, fontWeight: FontWeight.w400);
@@ -134,7 +134,7 @@ Widget On_Clicked_Text(context,{required String subText,required void Function()
 //HEADING
 Widget Title_Style({required String Title, required bool? isStatus}) {
   return Padding(
-    padding: const EdgeInsets.only(top: 20,bottom: 10),
+    padding: const EdgeInsets.only(top: 20,bottom: 5),
     child: Row(
       // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [

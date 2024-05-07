@@ -13,6 +13,7 @@ class OTP extends StatefulWidget {
 
 class _OTPState extends State<OTP> {
   final _formkey = GlobalKey<FormState>();
+  TextEditingController _MobileNumber = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,12 +31,15 @@ class _OTPState extends State<OTP> {
         child: Center(child: Text("My Number Is",style: Textfield_Style2,)),
             ),
               const SizedBox(height: 30,),
-              Text('Please enter code we just send to',style: Textfield_Style1,),
+              Text('Please enter code we just send to \n     +91-${_MobileNumber.text}',style: Textfield_Style1,),
               const SizedBox(height: 40,),
               // OTP
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
+
+                  // OTP FIELD
+
                   SizedBox(height: 60,width: 60,
                     child: TextFormField(
                       decoration: InputDecoration(
@@ -127,6 +131,8 @@ class _OTPState extends State<OTP> {
                 ],
               ),
               const SizedBox(height: 25,),
+
+              // ON TAP TEXT
 
               Text('Didn’t receive OTP?',style: onClicked_TextC,),
               const SizedBox(height: 10,),
