@@ -102,6 +102,7 @@ class _YourdetailsState extends State<Yourdetails> {
                 ),
 
             // TEXTFORM FIELD GENDER
+                Title_Style(Title: '"Gender"', isStatus: null,),
 
 
             const Spacer(),
