@@ -20,10 +20,6 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backGroundColor,
-      appBar: AppBar(
-        backgroundColor: backGroundColor,
-        title: Text('VV'),
-      ),
       body: Padding(
         padding: const EdgeInsets.only(top: 70),
         child: Column(
