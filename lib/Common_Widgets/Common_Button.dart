@@ -31,6 +31,50 @@ Widget CommonElevatedButton(
 }
 
 
+//CALL BUTTON
+Widget Call_Button(context,{required void Function()? onPress,required String ButtonText }){
+  return InkWell(
+    onTap: onPress,
+    child: Container(
+      height: 60,
+      width: MediaQuery.sizeOf(context).width,
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(50),color: pink1),
+
+      // INSIDE BUTTON
+      child: Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 5,right: 50),
+            child: Container(
+              height: 50,
+              width: 50,
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(50),color: white1),
+              child: Icon(Icons.phone,color: pink1,size: 30,),
+            ),
+          ),
+          Text(ButtonText,style: ButtonT,),
+        ],
+      ),
+    ),
+  );
+}
+
+//SIGN UP
+Widget Sign_Up({required void Function()? onPress}){
+  return   Padding(
+    padding: const EdgeInsets.only(left: 60,right: 60,bottom: 30,top: 20),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text("Don’t have an account?",style: onClicked_TextC,),
+        InkWell(
+          onTap: onPress,
+            child: Text("Sign Up",style: onClicked_TextB,))
+      ],
+    ),
+  );
+}
+
 
 
 

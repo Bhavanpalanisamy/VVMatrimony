@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:vvmatrimony/Common_Widgets/Image_Path.dart';
 import 'dart:io';
 import '../utilits/Common_Colors.dart';
 
@@ -128,5 +129,13 @@ Widget borderbuildImage(String imageUrl, {double? border, BoxFit? fit}) {
         );
       },
     ),
+  );
+}
+
+//SMALL LOGO
+Widget Small_Logo(){
+  return Padding(
+    padding: const EdgeInsets.only(top: 50,bottom: 20),
+    child: ImgPathSvg("smallLogo.svg"),
   );
 }

@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:vvmatrimony/Common_Widgets/Common_Button.dart';
+import 'package:vvmatrimony/Common_Widgets/Image_Path.dart';
+import 'package:vvmatrimony/Common_Widgets/Image_Picker.dart';
 import 'package:vvmatrimony/LoginPage_Ui/LoginPage_Screen.dart';
 
 import '../Common_Widgets/Custom_App_Bar.dart';
 import '../utilits/Common_Colors.dart';
 import '../utilits/Text_Style.dart';
+
 class GetStarted extends StatefulWidget {
   const GetStarted({super.key});
 
@@ -16,79 +20,68 @@ class _GetStartedState extends State<GetStarted> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backGroundColor,
-      body: Column(
-        children: [
+      body: Container(
+        height: MediaQuery.sizeOf(context).height,
+        width: MediaQuery.sizeOf(context).width,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 20, right: 20),
+          child: _MainBody(),
 
-          // GROUP IMAGE
-
-          Container(
-            height: MediaQuery.sizeOf(context).height/2.5,
-            width: MediaQuery.sizeOf(context).width,
-            decoration: BoxDecoration(
-              image: DecorationImage(image: AssetImage("lib/assets/groupimage.png"),
-                  fit: BoxFit.cover),
-            ),
-          ),
-
-          const SizedBox(height: 30,),
-
-          Text('Discover Love where your \n            story begins.',style: Textfield_Style2,),
-          const SizedBox(height: 30,),
-          Text('Join us to discover your ideal partner \n '
-              'and ignite the sparks of romance in\n                  '
-              ' your journey..',style: sub_ContentST,),
-
-      const Spacer(),
-
-          // BUTTON
-
-          Padding(
-            padding: const EdgeInsets.only(left: 25,right: 25),
-            child: InkWell(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
-              },
-              child: Container(
-                height: 60,width: MediaQuery.sizeOf(context).width,
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(50),color: pink1),
-
-                // INSIDE BUTTON
-
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 5),
-                      child: Container(
-                        height: 50,
-                        width: 50,
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(50),color: white1),
-                        child: Icon(Icons.phone,color: pink1,size: 30,),
-                      ),
-                    ),
-                    const SizedBox(width: 50,),
-
-                    Text('Login with Phone',style: ButtonT,),
-                  ],
-                ),
-              ),
-            ),
-          ),
-
-          // ON CLICK TEXT
-
-          const SizedBox(height: 20,),
-          Padding(
-            padding: const EdgeInsets.only(left: 60,right: 60,bottom: 30 ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("Don’t have an account?",style: onClicked_TextC,),
-                Text("Sign Up",style: onClicked_TextB,)
-              ],
-            ),
-          )
-        ],
+        ),
       ),
     );
   }
+  Widget _MainBody(){
+    return  Column(
+      children: [
+        Small_Logo(),
+        // GROUP IMAGE
+        Container(
+            height: MediaQuery.sizeOf(context).height / 2.5,
+            width: MediaQuery.sizeOf(context).width,
+            child: ImgPathSvg('groupimage.svg')),
+
+        //DISCOVERY
+        _DisCoverT(context),
+
+        //JOIN US
+        _JoinUsT(context),
+        const Spacer(),
+
+        // BUTTON
+        Call_Button(context, onPress: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => LoginPage()));
+        }, ButtonText: 'Login with Phone'),
+
+        // ON CLICK TEXT
+        Sign_Up(onPress: () {}),
+      ],
+    );
+  }
+}
+
+//DISCOVER TEXT
+Widget _DisCoverT(context) {
+  return Container(
+      width: MediaQuery.sizeOf(context).width / 1.2,
+      child: Text(
+        'Discover Love where your story begins.',
+        style: Textfield_Style2,
+        textAlign: TextAlign.center,
+        maxLines: 2,
+      ));
+}
+
+Widget _JoinUsT(context) {
+  return Container(
+    margin: EdgeInsets.only(top: 20),
+    width: MediaQuery.sizeOf(context).width / 1.2,
+    child: Text(
+      'Join us to discover your ideal partner and ignite the sparks of romance in your journey..',
+      style: sub_ContentST,
+      maxLines: 3,
+      textAlign: TextAlign.center,
+    ),
+  );
 }
