@@ -23,6 +23,8 @@ TextStyle ButtonT1=TextStyle( fontFamily: 'Inter', fontSize: 12, color: blue3, f
 
 // PROFILE NAME
 TextStyle ProfileT=TextStyle( fontFamily: 'Inter', fontSize: 22, color: Colors.black, fontWeight: FontWeight.w700);
+TextStyle profileId=TextStyle( fontFamily: 'Inter', fontSize: 14, color: Color.fromRGBO(75, 75, 75,  1), fontWeight: FontWeight.w600);
+
 
 // MATRIMONY ID
 TextStyle MatrimonyID=TextStyle( fontFamily: 'Open Sans', fontSize: 13, color: Color.fromRGBO(140, 140, 140, 1), fontWeight: FontWeight.w500);
@@ -81,8 +83,9 @@ TextStyle priceT2=TextStyle( fontFamily: 'Inter', fontSize: 16, color:white1, fo
 TextStyle bestT=TextStyle( fontFamily: 'Inter', fontSize: 14, color:blue5, fontWeight: FontWeight.w600,);
 TextStyle TabT=TextStyle( fontFamily: 'Roboto', fontSize: 14, color: Color.fromRGBO(52, 52, 52, 1), fontWeight: FontWeight.w500);
 //CATEGORY TAB
-TextStyle cardDetailT=TextStyle( fontFamily: 'Inter', fontSize: 16, color:Black, fontWeight: FontWeight.w500);
-TextStyle rejectionT=TextStyle( fontFamily: 'Inter', fontSize: 18, color:Black, fontWeight: FontWeight.w500);
+TextStyle cardDetailT=TextStyle( fontFamily: 'Inter', fontSize: 16, color:Color.fromRGBO(0, 0, 0, 1), fontWeight: FontWeight.w500);
+TextStyle rejectionT=TextStyle( fontFamily: 'Inter', fontSize: 18, color:Black, fontWeight: FontWeight.w600);
+TextStyle profileHeadingT=TextStyle( fontFamily: 'Inter', fontSize: 18, color:pink2, fontWeight: FontWeight.w700);
 TextStyle totalT=TextStyle( fontFamily: 'Inter', fontSize: 16, color:Black, fontWeight: FontWeight.w600);
 TextStyle totalT2=TextStyle( fontFamily: 'Inter', fontSize: 16, color:blue3, fontWeight: FontWeight.w600);
 TextStyle aplliedCT=TextStyle( fontFamily: 'Inter', fontSize: 16, color:green1, fontWeight: FontWeight.w600);
@@ -102,7 +105,7 @@ TextStyle TaskT2=TextStyle( fontFamily: 'Inter', fontSize: 20, color:blue3, font
 TextStyle offerT=TextStyle( fontFamily: 'Inter', fontSize: 14, color:grey1, fontWeight: FontWeight.w600,);
 
 TextStyle mapT1=TextStyle( fontFamily: 'Poppins', fontSize: 18, color: Color.fromRGBO(0, 0, 0, 1), fontWeight: FontWeight.w500);
-TextStyle mapT2=TextStyle( fontFamily: 'Roboto', fontSize: 14, color: Color.fromRGBO(0, 0, 0, 1), fontWeight: FontWeight.w400);
+TextStyle mapT2=TextStyle( fontFamily: 'Roboto', fontSize: 14, color: Color.fromRGBO(14, 14, 14, 1), fontWeight: FontWeight.w600);
 TextStyle mapT3=TextStyle( fontFamily: 'Inter', fontSize: 12, color: blue1, fontWeight: FontWeight.w500);
 
 TextStyle pdfT = TextStyle(

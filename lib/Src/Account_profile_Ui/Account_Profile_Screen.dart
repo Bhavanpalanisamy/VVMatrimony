@@ -1,5 +1,7 @@
 
 import 'package:flutter/material.dart';
+import 'package:vvmatrimony/Src/LoginPage_Ui/LoginPage_Screen.dart';
+import 'package:vvmatrimony/Src/My_Favourites%20_Ui/My_Favourites_Screen.dart';
 import 'package:vvmatrimony/utilits/Common_Colors.dart';
 import '../../Common_Widgets/Custom_App_Bar.dart';
 import '../../Common_Widgets/Image_Path.dart';
@@ -33,11 +35,15 @@ class _AccountprofileState extends State<Accountprofile> {
 
               //CONTAINERS
               Containers(context, text: 'My Profile', image: ('Profile_Frame.svg'), onTap: null),
-              Containers(context, text: 'My Favorites', image: ('Heart_Frame.svg'), onTap: null),
+              Containers(context, text: 'My Favorites', image: ('Heart_Frame.svg'), onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>Myfavourites()));
+              }),
               Containers(context, text: 'Terms & Condition', image: ('Terms_Condition_Frame.svg'), onTap: null),
               Containers(context, text: 'Privacy Policy', image: ('Lock_Image.svg'), onTap: null),
               Containers(context, text: 'About', image: ('About_Frame.svg'), onTap: null),
-              Containers(context, text: 'Logout', image: ('Logout_Frame.svg'), onTap: null),
+              Containers(context, text: 'Logout', image: ('Logout_Frame.svg'), onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage()));
+              }),
           ],
           ),
         ),
