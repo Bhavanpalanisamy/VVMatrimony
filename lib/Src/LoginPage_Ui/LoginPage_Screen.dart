@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:vvmatrimony/OTP_Ui/OTP_Screen.dart';
+import 'package:vvmatrimony/Common_Widgets/Common_Button.dart';
+import 'package:vvmatrimony/Common_Widgets/Image_Picker.dart';
+import 'package:vvmatrimony/Common_Widgets/Text_Form_Field.dart';
+import 'package:vvmatrimony/Src/OTP_Ui/OTP_Screen.dart';
 import 'package:vvmatrimony/utilits/Common_Colors.dart';
+import 'package:vvmatrimony/utilits/Text_Style.dart';
 
-import '../Common_Widgets/Common_Button.dart';
-import '../Common_Widgets/Image_Picker.dart';
-import '../Common_Widgets/Text_Form_Field.dart';
-import '../utilits/Text_Style.dart';
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -62,7 +62,7 @@ class _LoginPageState extends State<LoginPage> {
 
             Padding(
               padding: const EdgeInsets.only(left: 15,right: 15,bottom: 30),
-              child: CommonElevatedButton(context, 'Continue', () {if(_formkey.currentState!.validate()){
+              child: CommonElevatedButton(context, 'Next', () {if(_formkey.currentState!.validate()){
                 Navigator.push(context, MaterialPageRoute(builder: (context) => OTP()));
               };}),
             ),

@@ -2,10 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../Common_Widgets/Common_Button.dart';
-import '../Common_Widgets/Custom_App_Bar.dart';
-import '../utilits/Common_Colors.dart';
-import '../utilits/Text_Style.dart';
+import 'package:vvmatrimony/Common_Widgets/Common_Button.dart';
+import 'package:vvmatrimony/Common_Widgets/Custom_App_Bar.dart';
+import 'package:vvmatrimony/Src/YourDetails_Ui/YourDetails_Screen.dart';
+import 'package:vvmatrimony/utilits/Common_Colors.dart';
+import 'package:vvmatrimony/utilits/Text_Style.dart';
+
 class OTP extends StatefulWidget {
   const OTP({super.key});
 
@@ -136,7 +138,7 @@ class _OTPState extends State<OTP> {
               Padding(
                 padding: const EdgeInsets.only(left: 15,right: 15,bottom: 50),
                 child: CommonElevatedButton(context, 'Verify', () {if(_formkey.currentState!.validate()){
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => OTP()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Yourdetails()));
                 };}),
               ),
             ],

@@ -42,6 +42,8 @@ class _Professional_Register_ScreenState extends State<Professional_Register_Scr
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                //Professional
+                Head_Text(HeadText: "Tell about Some Professional"),
                 //EDUCTION
                 Title_Style(Title: 'Education', isStatus: null),
                 textFormField(

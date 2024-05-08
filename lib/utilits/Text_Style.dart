@@ -18,6 +18,8 @@ TextStyle SiblingsT=TextStyle( fontFamily: 'Inter', fontSize: 16, color: Colors.
 
 //BUTTON TEXT
 TextStyle ButtonT=TextStyle( fontFamily: 'Inter', fontSize: 18, color: white1, fontWeight: FontWeight.w600);
+TextStyle ButtonT1=TextStyle( fontFamily: 'Inter', fontSize: 12, color: blue3, fontWeight: FontWeight.w700);
+
 
 TextStyle appTitle=TextStyle( fontFamily: 'Roboto', fontSize: 18, color: Black, fontWeight: FontWeight.w500);
 TextStyle appTitle2=TextStyle( fontFamily: 'Roboto', fontSize: 18, color: white1, fontWeight: FontWeight.w500);

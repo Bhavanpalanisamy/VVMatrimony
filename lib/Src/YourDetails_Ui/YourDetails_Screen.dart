@@ -1,15 +1,15 @@
-import 'dart:js';
+
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:vvmatrimony/GetStarted_Ui/GetStarted_Screen.dart';
+import 'package:vvmatrimony/Common_Widgets/Common_Button.dart';
+import 'package:vvmatrimony/Common_Widgets/Custom_App_Bar.dart';
+import 'package:vvmatrimony/Common_Widgets/Text_Form_Field.dart';
+import 'package:vvmatrimony/Src/Registration_Ui/Family_Registration_Screen/Family_Registration_Screen.dart';
+import 'package:vvmatrimony/utilits/Common_Colors.dart';
+import 'package:vvmatrimony/utilits/Text_Style.dart';
 
-import '../Common_Widgets/Common_Button.dart';
-import '../Common_Widgets/Custom_App_Bar.dart';
-import '../Common_Widgets/Text_Form_Field.dart';
-import '../utilits/Common_Colors.dart';
-import '../utilits/Text_Style.dart';
 class Yourdetails extends StatefulWidget {
   const Yourdetails({super.key});
 
@@ -73,7 +73,7 @@ class _YourdetailsState extends State<Yourdetails> {
                     // TEXTFROM FIELD HEADING (Name)
 
                     Title_Style(Title: '"Full Name"', isStatus: null,),
-                    textFormField2(hintText: 'Enter Your Name',
+                    textFormField(hintText: 'Enter Your Name',
                         keyboardtype: TextInputType.text,
                         Controller: _Name,
                         inputFormatters: [
@@ -91,7 +91,7 @@ class _YourdetailsState extends State<Yourdetails> {
 
                     Title_Style(Title: '"Email ID"', isStatus: null,),
 
-                    textFormField2(hintText: 'Enter Your Email',
+                    textFormField(hintText: 'Enter Your Email',
                         keyboardtype: TextInputType.text,
 
                       Controller: _email,
@@ -112,7 +112,7 @@ class _YourdetailsState extends State<Yourdetails> {
                     // TEXTFORM FILED AGE
 
                     Title_Style(Title: '"Your Age"', isStatus: null,),
-                    textFormField2(hintText: 'Enter Your Age',
+                    textFormField(hintText: 'Enter Your Age',
                         keyboardtype: TextInputType.number,
                         Controller: _Age,
                         inputFormatters: [
@@ -198,6 +198,7 @@ class _YourdetailsState extends State<Yourdetails> {
                       padding: const EdgeInsets.only(top: 30,bottom: 50),
                       child: CommonElevatedButton(context, 'Continue', () {
                         if(_formkey.currentState!.validate()){
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>Family_Registration_Screen()));
                       };
                       }),
                     ),

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:vvmatrimony/GetStarted_Ui/GetStarted_Screen.dart';
-import 'package:vvmatrimony/LoginPage_Ui/LoginPage_Screen.dart';
-import 'package:vvmatrimony/MyNumber_Ui/MyNumber_Screen.dart';
-import 'package:vvmatrimony/OTP_Ui/OTP_Screen.dart';
-import 'package:vvmatrimony/YourDetails_Ui/YourDetails_Screen.dart';
+import 'Src/Profile_Completed_Ui/Profile_Completed_Screen.dart';
+import 'Src/Profile_Description_Ui/Profile_Description_Screen.dart';
+import 'Src/Upload_Your_Photo_Ui/Upload_Your_Photo_Screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,7 +20,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: Yourdetails(),
+      home: Profile_Description_Screen(),
     );
   }
 }

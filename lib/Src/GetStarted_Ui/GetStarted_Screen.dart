@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:vvmatrimony/Common_Widgets/Common_Button.dart';
 import 'package:vvmatrimony/Common_Widgets/Image_Path.dart';
 import 'package:vvmatrimony/Common_Widgets/Image_Picker.dart';
-import 'package:vvmatrimony/LoginPage_Ui/LoginPage_Screen.dart';
+import 'package:vvmatrimony/Src/LoginPage_Ui/LoginPage_Screen.dart';
+import 'package:vvmatrimony/utilits/Common_Colors.dart';
+import 'package:vvmatrimony/utilits/Text_Style.dart';
 
-import '../Common_Widgets/Custom_App_Bar.dart';
-import '../utilits/Common_Colors.dart';
-import '../utilits/Text_Style.dart';
 
 class GetStarted extends StatefulWidget {
   const GetStarted({super.key});
