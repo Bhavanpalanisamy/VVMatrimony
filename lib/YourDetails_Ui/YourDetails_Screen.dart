@@ -1,8 +1,12 @@
+import 'dart:js';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:vvmatrimony/GetStarted_Ui/GetStarted_Screen.dart';
 
 import '../Common_Widgets/Common_Button.dart';
+import '../Common_Widgets/Custom_App_Bar.dart';
 import '../Common_Widgets/Text_Form_Field.dart';
 import '../utilits/Common_Colors.dart';
 import '../utilits/Text_Style.dart';
@@ -20,107 +24,192 @@ class _YourdetailsState extends State<Yourdetails> {
   TextEditingController _Age = TextEditingController();
   TextEditingController _Dob = TextEditingController();
 
+  // GENDER
+  String? Gender;
+  List<String> Genderoption = [
+    "Male",
+    "Female"
+  ];
+
+
   @override
   Widget build(BuildContext context) {
+    void _showErrorDialog(String message) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Alert"),
+            content: Text(message),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  _Dob.text = "";
+                  Navigator.of(context).pop();
+                },
+                child: Text("OK"),
+              ),
+            ],
+          );
+        },
+      );
+    }
     return Scaffold(
       backgroundColor: backGroundColor,
-      appBar: AppBar(
-        backgroundColor: backGroundColor,
-        title: Text('VV'),
-      ),
+      appBar: Custom_AppBar_Logo(title: '', actions: [], isNav: true,),
         body: Form(
           key: _formkey,
           child: Padding(
             padding: const EdgeInsets.only(left: 15,right: 15,top: 30),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-            Center(child: Text("Tell about Yourself",style: Textfield_Style2,)),
+            child: SingleChildScrollView(
+              child: Container(
+                // height: MediaQuery.sizeOf(context).height*1.3,
+                width: MediaQuery.sizeOf(context).width,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                Center(child: Text("Tell about Yourself",style: Textfield_Style2,)),
 
-                // TEXTFROM FIELD HEADING (Name)
+                    // TEXTFROM FIELD HEADING (Name)
 
-                Title_Style(Title: '"Full Name"', isStatus: null,),
-                textFormField2(hintText: 'Enter Your Name',
-                    keyboardtype: TextInputType.text,
-                    Controller: _Name,
-                    inputFormatters: [
-                      LengthLimitingTextInputFormatter(20),
-                      FilteringTextInputFormatter.singleLineFormatter],
-                    onChanged: null,
-                    validating:(value){
-                      if (value!.isEmpty) {
-                        return 'Please Enter Name';
-                      }
+                    Title_Style(Title: '"Full Name"', isStatus: null,),
+                    textFormField2(hintText: 'Enter Your Name',
+                        keyboardtype: TextInputType.text,
+                        Controller: _Name,
+                        inputFormatters: [
+                          LengthLimitingTextInputFormatter(20),
+                          FilteringTextInputFormatter.singleLineFormatter],
+                        onChanged: null,
+                        validating:(value){
+                          if (value!.isEmpty) {
+                            return 'Please Enter Name';
+                          }
+                        }
+                    ),
+
+                    // TEXTFORM FIELD EMAIL
+
+                    Title_Style(Title: '"Email ID"', isStatus: null,),
+
+                    textFormField2(hintText: 'Enter Your Email',
+                        keyboardtype: TextInputType.text,
+
+                      Controller: _email,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.singleLineFormatter],
+                      onChanged: null,
+                      validating: (value){
+                        if(value==null||value.isEmpty){
+                          return "Enter Email";
+                        }else if(!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)){
+                          return "Please Enter valid Email ";
+                        }else{
+                          return null;
+                        }
+                      },
+                    ),
+
+                    // TEXTFORM FILED AGE
+
+                    Title_Style(Title: '"Your Age"', isStatus: null,),
+                    textFormField2(hintText: 'Enter Your Age',
+                        keyboardtype: TextInputType.number,
+                        Controller: _Age,
+                        inputFormatters: [
+                          LengthLimitingTextInputFormatter(2),
+                          FilteringTextInputFormatter.digitsOnly],
+                        onChanged: null,
+                        validating:(value){
+                          if (value!.isEmpty) {
+                            return 'Please Enter Age';
+                          }
+                        }
+                    ),
+
+                // TEXTFORM FIELD DOB
+                    Title_Style(Title: '"Date of Birth"', isStatus: null,),
+              TextFieldDatePicker(
+                Controller: _Dob,
+                onChanged: null,
+                hintText: 'dd/MM/yyyy',
+                onTap: () async {
+                  FocusScope.of(context).unfocus();
+                  DateTime? pickedDate = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(1950),
+                    lastDate: DateTime.now(),
+                  );
+                  if (pickedDate != null) {
+                    String formattedDate =
+                    DateFormat("dd/MM/yyyy").format(pickedDate);
+                    if (mounted) {
+                      setState(() {
+                        _Dob.text = formattedDate;
+                      });
                     }
-                ),
-
-                // TEXTFORM FIELD EMAIL
-
-                Title_Style(Title: '"Email ID"', isStatus: null,),
-
-                textFormField2(hintText: 'Enter Your Email',
-                    keyboardtype: TextInputType.text,
-
-                  Controller: _email,
-                  inputFormatters: [
-                    LengthLimitingTextInputFormatter(25),
-                    FilteringTextInputFormatter.singleLineFormatter],
-                  onChanged: null,
-                  validating: (value){
-                    if(value==null||value.isEmpty){
-                      return "Enter Email";
-                    }else if(!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)){
-                      return "Please Enter valid Email ";
-                    }else{
+                    DateTime currentDate = DateTime.now();
+                    int age = currentDate.year - pickedDate.year;
+                    if (age < 18) {
+                      _showErrorDialog(
+                          "You must be at least 18 years old to register.");
+                    }
+                  }
+                },
+                validating: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please Select Date of Birth';
+                  } else {
+                    DateTime selectedDate =
+                    DateFormat("dd/MM/yyyy").parse(value);
+                    DateTime currentDate = DateTime.now();
+                    int age = currentDate.year - selectedDate.year;
+                    if (age < 18) {
+                      return 'You must be at least 18 years old to register.';
+                    } else {
                       return null;
                     }
-                  },
+                  }
+                },
+              ),
+
+
+                // TEXTFORM FIELD GENDER
+                    Title_Style(Title: '"Gender"', isStatus: null,),
+                dropDownField(
+                    context,
+                    hintText:"Select your Gender",
+                    value: Gender,
+                    listValue: Genderoption,
+                    onChanged: (String? newvalue){
+                      setState(() {
+                        Gender = newvalue;
+                      });
+                      },
                 ),
+                    // DECSRIPTION
 
-                // TEXTFORM FILED AGE
+                    Title_Style(Title: '"About You"', isStatus: null,),
+                    textfieldDescription(hintText: 'Type...'),
 
-                Title_Style(Title: '"Your Age"', isStatus: null,),
-                textFormField2(hintText: 'Enter Your Age',
-                    keyboardtype: TextInputType.number,
-                    Controller: _Age,
-                    inputFormatters: [
-                      LengthLimitingTextInputFormatter(2),
-                      FilteringTextInputFormatter.digitsOnly],
-                    onChanged: null,
-                    validating:(value){
-                      if (value!.isEmpty) {
-                        return 'Please Enter Age';
-                      }
-                    }
+
+                    // BUTTON
+                    Padding(
+                      padding: const EdgeInsets.only(top: 30,bottom: 50),
+                      child: CommonElevatedButton(context, 'Continue', () {
+                        if(_formkey.currentState!.validate()){
+                      };
+                      }),
+                    ),
+
+                  ],
                 ),
-
-            // TEXTFORM FIELD DOB
-
-                Title_Style(Title: '"Date of Birth"', isStatus: null,),
-                TextFieldDatePicker(hintText: 'Enter Your Date of Birth',
-                  Controller: _Dob,
-                ),
-
-            // TEXTFORM FIELD GENDER
-
-
-            const Spacer(),
-
-                // BUTTON
-
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 40),
-                  child: CommonElevatedButton(context, 'Continue', () {if(_formkey.currentState!.validate()){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => GetStarted()));
-                  };}),
-                ),
-
-              ],
+              ),
             ),
           ),
         ),
     );
   }
-}
 
+}
 
