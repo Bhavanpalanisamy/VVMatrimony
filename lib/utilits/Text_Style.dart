@@ -21,6 +21,28 @@ TextStyle ButtonT=TextStyle( fontFamily: 'Inter', fontSize: 18, color: white1, f
 TextStyle ButtonT1=TextStyle( fontFamily: 'Inter', fontSize: 12, color: blue3, fontWeight: FontWeight.w700);
 
 
+// PROFILE NAME
+TextStyle ProfileT=TextStyle( fontFamily: 'Inter', fontSize: 22, color: Colors.black, fontWeight: FontWeight.w700);
+
+// MATRIMONY ID
+TextStyle MatrimonyID=TextStyle( fontFamily: 'Open Sans', fontSize: 13, color: Color.fromRGBO(140, 140, 140, 1), fontWeight: FontWeight.w500);
+
+// CONTAINER TEXT
+TextStyle ContainerT=TextStyle( fontFamily: 'Inter', fontSize: 15, color: Color.fromRGBO(21, 11, 61, 1), fontWeight: FontWeight.w400);
+
+//NOTIFICATION
+TextStyle notificationT1=TextStyle( fontFamily: 'Inter', fontSize: 15, color: Black2, fontWeight: FontWeight.w500);
+TextStyle notificationT2=TextStyle( fontFamily: 'Inter', fontSize: 13, color: Black3, fontWeight: FontWeight.w400);
+TextStyle notificationT3=TextStyle( fontFamily: 'Inter', fontSize: 13, color: Black4, fontWeight: FontWeight.w300);
+
+// MY FAV TEXT
+TextStyle FavT1=TextStyle( fontFamily: 'Inter', fontSize: 18, color: Black, fontWeight: FontWeight.w700);
+TextStyle FavT2=TextStyle( fontFamily: 'Inter', fontSize: 14, color: Black5, fontWeight: FontWeight.w500);
+TextStyle FavT3=TextStyle( fontFamily: 'Inter', fontSize: 14, color: Black2, fontWeight: FontWeight.w500);
+TextStyle FavT4=TextStyle( fontFamily: 'Inter', fontSize: 14, color: white1, fontWeight: FontWeight.w500);
+
+
+
 TextStyle appTitle=TextStyle( fontFamily: 'Roboto', fontSize: 18, color: Black, fontWeight: FontWeight.w500);
 TextStyle appTitle2=TextStyle( fontFamily: 'Roboto', fontSize: 18, color: white1, fontWeight: FontWeight.w500);
 TextStyle notificationTitle=TextStyle( fontFamily: 'Nunito', fontSize: 16, color: blue3, fontWeight: FontWeight.w700);
@@ -29,11 +51,6 @@ TextStyle ProductPriceT=TextStyle( fontFamily: 'Roboto', fontSize: 18, color: Co
 
 TextStyle StarT=TextStyle(color: Colors.red,fontSize: 25);
 
-
-
-
-//NOTIFICATION
-TextStyle notificationT=TextStyle( fontFamily: 'Roboto', fontSize: 8, color: white1, fontWeight: FontWeight.w400);
 //LOCATION
 TextStyle locationT=TextStyle( fontFamily: 'Roboto', fontSize: 11, color:black4, fontWeight: FontWeight.w500,letterSpacing: 2);
 //VIEW ALL
