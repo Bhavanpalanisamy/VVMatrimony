@@ -3,6 +3,7 @@ import 'package:vvmatrimony/Common_Widgets/Common_Button.dart';
 import 'package:vvmatrimony/Common_Widgets/Image_Path.dart';
 import 'package:vvmatrimony/Common_Widgets/Image_Picker.dart';
 import 'package:vvmatrimony/Src/LoginPage_Ui/LoginPage_Screen.dart';
+import 'package:vvmatrimony/Src/YourDetails_Ui/YourDetails_Screen.dart';
 import 'package:vvmatrimony/utilits/Common_Colors.dart';
 import 'package:vvmatrimony/utilits/Text_Style.dart';
 
@@ -38,7 +39,7 @@ class _GetStartedState extends State<GetStarted> {
         Container(
             height: MediaQuery.sizeOf(context).height / 2.5,
             width: MediaQuery.sizeOf(context).width,
-            child: ImgPathSvg('groupimage.svg')),
+            child: ImgPathSvg('appInfo.svg')),
 
         //DISCOVERY
         _DisCoverT(context),
@@ -54,7 +55,9 @@ class _GetStartedState extends State<GetStarted> {
         }, ButtonText: 'Login with Phone'),
 
         // ON CLICK TEXT
-        Sign_Up(onPress: () {}),
+        Sign_Up(onPress: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>Yourdetails()));
+        }),
       ],
     );
   }

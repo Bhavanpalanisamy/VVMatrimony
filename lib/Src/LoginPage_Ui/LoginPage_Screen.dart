@@ -3,7 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:vvmatrimony/Common_Widgets/Common_Button.dart';
 import 'package:vvmatrimony/Common_Widgets/Image_Picker.dart';
 import 'package:vvmatrimony/Common_Widgets/Text_Form_Field.dart';
+import 'package:vvmatrimony/Src/Home_Dashboard_Ui/Home_Dashboard_Screen.dart';
 import 'package:vvmatrimony/Src/OTP_Ui/OTP_Screen.dart';
+import 'package:vvmatrimony/Src/YourDetails_Ui/YourDetails_Screen.dart';
 import 'package:vvmatrimony/utilits/Common_Colors.dart';
 import 'package:vvmatrimony/utilits/Text_Style.dart';
 
@@ -62,15 +64,17 @@ class _LoginPageState extends State<LoginPage> {
 
             Padding(
               padding: const EdgeInsets.only(left: 15,right: 15,bottom: 30),
-              child: CommonElevatedButton(context, 'Next', () {if(_formkey.currentState!.validate()){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => OTP()));
+              child: CommonElevatedButton(context, 'Login', () {if(_formkey.currentState!.validate()){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => HomeDashboard()));
               };}),
             ),
 
             Text("OR"),
 
             // ON CLICK TEXT
-            Sign_Up(onPress: () {}),
+            Sign_Up(onPress: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>Yourdetails()));
+            }),
           ],
         ),
       ),

@@ -42,10 +42,11 @@ Widget Call_Button(context,{required void Function()? onPress,required String Bu
 
       // INSIDE BUTTON
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 5,right: 90),
+            padding: const EdgeInsets.only(),
             child: Container(
               height: 50,
               width: 50,

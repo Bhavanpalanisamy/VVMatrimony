@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:vvmatrimony/Src/LoginPage_Ui/LoginPage_Screen.dart';
 import 'package:vvmatrimony/Src/My_Favourites%20_Ui/My_Favourites_Screen.dart';
+import 'package:vvmatrimony/Src/Profile_Edit_Ui/Profile_Edit_Screen.dart';
 import 'package:vvmatrimony/utilits/Common_Colors.dart';
 import '../../Common_Widgets/Custom_App_Bar.dart';
 import '../../Common_Widgets/Image_Path.dart';
@@ -18,7 +19,24 @@ class _AccountprofileState extends State<Accountprofile> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backGroundColor,
-      appBar: Custom_AppBar_Logo(title: '', actions: [], isNav: true,),
+      appBar: Custom_AppBar_Logo(title: '', actions: [
+        PopupMenuButton(
+            surfaceTintColor: white1,
+            icon:
+            Icon(Icons.more_vert_outlined),
+            itemBuilder: (BuildContext context) => [
+              PopupMenuItem(
+                  child:
+                  InkWell(
+                      onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>Profileedit()));
+                      },
+                      child: Text(
+                        'Edit Profile',
+                        style: mapT1,
+                      ))),
+            ])
+      ], isNav: true,),
       body: SingleChildScrollView(
         child: Container(
           width: MediaQuery.sizeOf(context).width,

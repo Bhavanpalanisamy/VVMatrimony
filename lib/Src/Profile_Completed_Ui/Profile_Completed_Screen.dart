@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vvmatrimony/Common_Widgets/Common_Button.dart';
 import 'package:vvmatrimony/Common_Widgets/Image_Path.dart';
+import 'package:vvmatrimony/Src/Home_Dashboard_Ui/Home_Dashboard_Screen.dart';
 import 'package:vvmatrimony/utilits/Common_Colors.dart';
 import 'package:vvmatrimony/utilits/Text_Style.dart';
 
@@ -39,7 +40,9 @@ class _Profile_Completed_ScreenState extends State<Profile_Completed_Screen> {
         const Spacer(),
         Padding(
           padding: const EdgeInsets.only(bottom: 50),
-          child: CommonElevatedButton(context, 'Go to Home', () { }),
+          child: CommonElevatedButton(context, 'Go to Home', () {
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeDashboard()));
+          }),
         )
       ],
     );

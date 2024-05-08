@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:vvmatrimony/Common_Widgets/Common_Button.dart';
 import 'package:vvmatrimony/Common_Widgets/Custom_App_Bar.dart';
 import 'package:vvmatrimony/Common_Widgets/Text_Form_Field.dart';
+import 'package:vvmatrimony/Src/Profile_Completed_Ui/Profile_Completed_Screen.dart';
 import 'package:vvmatrimony/Src/Registration_Ui/Family_Registration_Screen/Horoscope_Registration_Screen.dart';
 import 'package:vvmatrimony/utilits/Common_Colors.dart';
 import 'package:vvmatrimony/utilits/Text_Style.dart';
@@ -199,6 +200,7 @@ class _Expectation_Registration_ScreenState extends State<Expectation_Registrati
         Padding(
           padding: const EdgeInsets.only(top: 50),
           child: CommonElevatedButton(context, 'Next', () {
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>Profile_Completed_Screen()));
           }),
         ),
       ],
