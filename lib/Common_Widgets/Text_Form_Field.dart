@@ -9,27 +9,26 @@ import '../utilits/Text_Style.dart';
 
 Widget textFormField(
     {TextEditingController? Controller,
-    String? Function(String?)? validating,
-     bool? isEnabled,
-    void Function(String)? onChanged,required String hintText,List<TextInputFormatter>? inputFormatters,required TextInputType keyboardtype}) {
-  return
-    Container(
-      // height: 50,
-      child:
-      TextFormField(
-        enabled: isEnabled,
+      String? Function(String?)? validating,
+      bool? isEnabled,
+      void Function(String)? onChanged,
+      required String hintText,
+      Widget? prefixIcon,
+      List<TextInputFormatter>? inputFormatters,
+      required TextInputType keyboardtype}) {
+  return Container(
+    // height: 50,
+    child: TextFormField(
+      enabled: isEnabled,
       controller: Controller,
       textCapitalization: TextCapitalization.none,
-      inputFormatters: [
-        LengthLimitingTextInputFormatter(10),
-        FilteringTextInputFormatter.digitsOnly
-      ],
+      inputFormatters: inputFormatters,
       validator: validating,
-        decoration: InputDecoration(
-        contentPadding:
-        EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+      decoration: InputDecoration(
+        contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
         hintText: hintText,
         hintStyle: HintST,
+        prefixIcon: prefixIcon,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(color: pink1),
@@ -38,16 +37,17 @@ Widget textFormField(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(color: pink1),
         ),
-          fillColor: white1,
+        fillColor: Colors.white,
         filled: true,
       ),
       onChanged: onChanged,
       textInputAction: TextInputAction.next,
-      style: Textfield_Style2,
-        keyboardType: keyboardtype,
-  ),
-    );
+      style: Textfield_Style1,
+      keyboardType: keyboardtype,
+    ),
+  );
 }
+
 Widget textFormField2(
     {TextEditingController? Controller,
       String? Function(String?)? validating,
@@ -315,7 +315,10 @@ Widget textFormFieldSearchBar(
 
 
 //DropDownExperience
-Widget dropDownField(context,{required String? value,required List<String>? listValue,required void Function(String?)? onChanged}){
+Widget dropDownField(context,{
+  required String? value,
+  required String? hintText,
+  required List<String>? listValue,required void Function(String?)? onChanged}){
   return  Container(
     height: 50,
     width: MediaQuery.of(context).size.width,
@@ -329,6 +332,10 @@ Widget dropDownField(context,{required String? value,required List<String>? list
       isExpanded: true,
       decoration:
       InputDecoration(
+        contentPadding:
+        EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+        hintText: hintText,
+        hintStyle: HintST,
         border: OutlineInputBorder(
           borderSide: BorderSide(color: pink1),
           borderRadius: BorderRadius.circular(10),
@@ -355,6 +362,7 @@ Widget dropDownField(context,{required String? value,required List<String>? list
         );
       }).toList(),
       onChanged: onChanged,
+        style:Textfield_Style1,
     ),
   );
 }

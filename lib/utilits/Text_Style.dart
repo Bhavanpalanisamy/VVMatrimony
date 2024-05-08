@@ -13,6 +13,8 @@ TextStyle sub_ContentST=TextStyle( fontFamily: 'Inter', fontSize: 15, color: Col
 //onclicked Text
 TextStyle onClicked_TextC=TextStyle( fontFamily: 'Inter', fontSize: 14, color: Colors.black, fontWeight: FontWeight.w400);
 TextStyle onClicked_TextB=TextStyle( fontFamily: 'Inter', fontSize: 14, color: pink1, fontWeight: FontWeight.w600);
+//SIBLINGS TEXT
+TextStyle SiblingsT=TextStyle( fontFamily: 'Inter', fontSize: 16, color: Colors.black, fontWeight: FontWeight.w500);
 
 //BUTTON TEXT
 TextStyle ButtonT=TextStyle( fontFamily: 'Inter', fontSize: 18, color: white1, fontWeight: FontWeight.w600);
@@ -134,7 +136,7 @@ Widget On_Clicked_Text(context,{required String subText,required void Function()
 //HEADING
 Widget Title_Style({required String Title, required bool? isStatus}) {
   return Padding(
-    padding: const EdgeInsets.only(top: 20,bottom: 5),
+    padding: const EdgeInsets.only(top: 5,bottom: 0),
     child: Row(
       // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -174,6 +176,15 @@ Widget RadioTerms(String txt1,String txt2,void Function()? onTap1,void Function(
           ),
         ),
       ],
+    ),
+  );
+}
+//HEAD TEXT
+Widget Head_Text({required String HeadText}){
+  return Center(
+    child: Padding(
+      padding: const EdgeInsets.only(top: 20),
+      child: Text(HeadText,style: Textfield_Style2,),
     ),
   );
 }
