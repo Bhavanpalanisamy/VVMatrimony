@@ -5,9 +5,11 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:vvmatrimony/utilits/Common_Colors.dart';
 
+import '../../Common_Widgets/Common_Button.dart';
 import '../../Common_Widgets/Custom_App_Bar.dart';
 import '../../Common_Widgets/Text_Form_Field.dart';
 import '../../utilits/Text_Style.dart';
+import '../Registration_Ui/Family_Registration_Screen/Family_Registration_Screen.dart';
 class Profileedit extends StatefulWidget {
   const Profileedit({super.key});
 
@@ -357,14 +359,35 @@ class _ProfileeditState extends State<Profileedit> {
                 Title_Style(Title: '"About You"', isStatus: null,),
                 textfieldDescription(hintText: 'Type...'),
 
-                //
-
+                //Family Information
+                Informationtext(text: 'Family Information'),
                 _MainBody(),
+
+                //Community Information
+                Informationtext(text: 'Community Information'),
+
+                //Personal Information
                 _MainBody2(),
+                Informationtext(text: 'Personal Information'),
                 _MainBody3(),
+
+                //Horoscope Information
+                Informationtext(text: 'Horoscope Information'),
                 _MainBody4(),
+
+                //Professional Information
+                Informationtext(text: 'Professional Information'),
                 _Mainbody5(),
 
+                // BUTTON
+                Padding(
+                  padding: const EdgeInsets.only(top: 30),
+                  child: CommonElevatedButton(context, 'Save', () {
+                    if(_formkey.currentState!.validate()){
+                      // Navigator.push(context, MaterialPageRoute(builder: (context)=>Family_Registration_Screen()));
+                    };
+                  }),
+                ),
               ],
             ),
           ),
@@ -921,8 +944,8 @@ class _ProfileeditState extends State<Profileedit> {
 
 Widget Informationtext({required String text}){
   return Padding(
-    padding: const EdgeInsets.only(top: 10,bottom: 10),
-    child: Text(text,),
+    padding: const EdgeInsets.only(top: 20,left: 5),
+    child: Text(text,style: profileHeadingT,),
   );
 }
 
