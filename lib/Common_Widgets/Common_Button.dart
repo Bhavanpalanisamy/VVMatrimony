@@ -42,9 +42,10 @@ Widget Call_Button(context,{required void Function()? onPress,required String Bu
 
       // INSIDE BUTTON
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 5,right: 50),
+            padding: const EdgeInsets.only(left: 5,right: 90),
             child: Container(
               height: 50,
               width: 50,
@@ -52,7 +53,7 @@ Widget Call_Button(context,{required void Function()? onPress,required String Bu
               child: Icon(Icons.phone,color: pink1,size: 30,),
             ),
           ),
-          Text(ButtonText,style: ButtonT,),
+          Center(child: Text(ButtonText,style: ButtonT,)),
         ],
       ),
     ),
