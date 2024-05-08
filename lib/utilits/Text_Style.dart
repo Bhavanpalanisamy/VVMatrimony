@@ -41,7 +41,8 @@ TextStyle FavT2=TextStyle( fontFamily: 'Inter', fontSize: 14, color: Black5, fon
 TextStyle FavT3=TextStyle( fontFamily: 'Inter', fontSize: 14, color: Black2, fontWeight: FontWeight.w500);
 TextStyle FavT4=TextStyle( fontFamily: 'Inter', fontSize: 14, color: white1, fontWeight: FontWeight.w500);
 
-
+//INFO TEXT
+TextStyle Infotext=TextStyle( fontFamily: 'Inter', fontSize: 18, color: pink1, fontWeight: FontWeight.w800);
 
 TextStyle appTitle=TextStyle( fontFamily: 'Roboto', fontSize: 18, color: Black, fontWeight: FontWeight.w500);
 TextStyle appTitle2=TextStyle( fontFamily: 'Roboto', fontSize: 18, color: white1, fontWeight: FontWeight.w500);

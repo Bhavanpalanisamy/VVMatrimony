@@ -77,6 +77,7 @@ const Color blue6=Color.fromRGBO(228, 241, 255, 1);
 //PINK
 const Color pink1=Color.fromRGBO(254, 80, 107, 1);
 
+
 //BACKGROUND
 const Color backGroundColor=Color.fromRGBO(255, 237, 240, 1);
 

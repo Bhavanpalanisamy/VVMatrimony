@@ -30,6 +30,7 @@ class _YourdetailsState extends State<Yourdetails> {
     "Male",
     "Female"
   ];
+  RegExp onlyText = RegExp(r'^[a-zA-Z ]+$');
 
 
   @override
@@ -79,12 +80,16 @@ class _YourdetailsState extends State<Yourdetails> {
                         inputFormatters: [
                           LengthLimitingTextInputFormatter(20),
                           FilteringTextInputFormatter.singleLineFormatter],
-                        onChanged: null,
-                        validating:(value){
-                          if (value!.isEmpty) {
-                            return 'Please Enter Name';
-                          }
+                      validating: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Please Enter Your Father Name";
                         }
+                        else if (!onlyText.hasMatch(value)) {
+                          return "Please Enter Your Father Name (Special Characters are Not Allowed)";
+                        }
+                        return null;
+                      },
+                      onChanged: null,
                     ),
 
                     // TEXTFORM FIELD EMAIL
@@ -196,7 +201,7 @@ class _YourdetailsState extends State<Yourdetails> {
                     // BUTTON
                     Padding(
                       padding: const EdgeInsets.only(top: 30,bottom: 50),
-                      child: CommonElevatedButton(context, 'Continue', () {
+                      child: CommonElevatedButton(context, 'Next', () {
                         if(_formkey.currentState!.validate()){
                           Navigator.push(context, MaterialPageRoute(builder: (context)=>Family_Registration_Screen()));
                       };

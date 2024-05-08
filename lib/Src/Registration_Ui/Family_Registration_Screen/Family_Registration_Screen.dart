@@ -334,6 +334,7 @@ class _Family_Registration_ScreenState extends State<Family_Registration_Screen>
             ],
           ),
         ),
+
         //UNMARRIED
         Column(
           mainAxisAlignment: MainAxisAlignment.start,
