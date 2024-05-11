@@ -1,4 +1,3 @@
-import 'dart:js';
 
 import 'package:flutter/material.dart';
 import 'package:vvmatrimony/utilits/Common_Colors.dart';
@@ -21,12 +20,18 @@ class _MyfavouritesState extends State<Myfavourites > {
     return Scaffold(
       backgroundColor: backGroundColor,
       appBar: Custom_AppBar_Logo(title: 'Notification', actions: [], isNav: true,),
-    body: Column(
-      children: [
-
-        // PRROFILE
-        _Profile_List(),
-      ],
+    body: SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+      
+          // PRROFILE
+          Padding(
+            padding: const EdgeInsets.only(bottom: 50),
+            child: _Profile_List(),
+          ),
+        ],
+      ),
     )
     );
   }

@@ -38,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
             //TEXTFORM FIELD
 
             Padding(
-              padding: const EdgeInsets.only(left: 15,right: 15,top: 30),
+              padding: const EdgeInsets.only(left: 15,right: 15,top: 100),
               child: Form(
                   key: _formkey,
                   child: textFormField(hintText: 'Enter phone number',
