@@ -145,7 +145,7 @@ class _Professional_Register_ScreenState extends State<Professional_Register_Scr
         Title_Style(Title: 'Work Location', isStatus: null),
         textFormField(
           hintText: 'Enter Your Work Location',
-          keyboardtype: TextInputType.number,
+          keyboardtype: TextInputType.text,
           inputFormatters: null,
           Controller: _WorkLocation,
           validating: (value) {
