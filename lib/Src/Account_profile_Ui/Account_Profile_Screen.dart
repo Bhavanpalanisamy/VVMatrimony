@@ -20,22 +20,6 @@ class _AccountprofileState extends State<Accountprofile> {
     return Scaffold(
       backgroundColor: backGroundColor,
       appBar: Custom_AppBar_Logo(title: '', actions: [
-        PopupMenuButton(
-            surfaceTintColor: white1,
-            icon:
-            Icon(Icons.more_vert_outlined),
-            itemBuilder: (BuildContext context) => [
-              PopupMenuItem(
-                  child:
-                  InkWell(
-                      onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>Profileedit()));
-                      },
-                      child: Text(
-                        'Edit Profile',
-                        style: mapT1,
-                      ))),
-            ])
       ], isNav: true,),
       body: SingleChildScrollView(
         child: Container(
@@ -52,7 +36,9 @@ class _AccountprofileState extends State<Accountprofile> {
               matrimony(),
 
               //CONTAINERS
-              Containers(context, text: 'My Profile', image: ('Profile_Frame.svg'), onTap: null),
+              Containers(context, text: 'My Profile', image: ('Profile_Frame.svg'), onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>Profileedit()));
+              }),
               Containers(context, text: 'My Favorites', image: ('Heart_Frame.svg'), onTap: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context)=>Myfavourites()));
               }),

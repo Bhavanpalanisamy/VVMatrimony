@@ -30,7 +30,12 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   return Padding(
                     padding: const EdgeInsets.only(left: 15,top: 30,right: 15),
                     child: Container(
-                      height: 100,width: 100,color: Colors.white,
+                      height: 100,
+                      width:MediaQuery.sizeOf(context).width,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: white1
+                      ),
                       child: Padding(
                         padding: const EdgeInsets.only(top: 15,left: 10),
                         child: Row(

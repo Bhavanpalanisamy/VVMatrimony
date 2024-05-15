@@ -46,7 +46,7 @@ Widget Call_Button(context,{required void Function()? onPress,required String Bu
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
-            padding: const EdgeInsets.only(),
+            padding: const EdgeInsets.only(right: 10),
             child: Container(
               height: 50,
               width: 50,
