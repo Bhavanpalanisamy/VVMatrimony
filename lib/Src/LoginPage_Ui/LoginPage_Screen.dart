@@ -93,14 +93,22 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   LoginApiResponse() async{
     final loginApiService = ApiService(ref.watch(dioProvider));
     var formData = FormData.fromMap({
-      "mobile":"2222222222",
+      "mobile":_MobileNumber.text,
     });
 
     final LoginResponse = await loginApiService.post<LoginModel>(ConstantApi.loginUrl, formData);
 
+    LoadingOverlay.show(context);
+
     if(LoginResponse?.status == true){
+      LoadingOverlay.hide();
+      ShowToastMessage(LoginResponse?.message ?? "");
+      UserId(LoginResponse?.userId ?? "");
+      print("USER ID :: ${LoginResponse?.userId ?? ""}");
       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomeDashboard()), (route) => false);
     }else{
+      LoadingOverlay.hide();
+      ShowToastMessage(LoginResponse?.message ?? "");
       print('ERROR');
     }
   }

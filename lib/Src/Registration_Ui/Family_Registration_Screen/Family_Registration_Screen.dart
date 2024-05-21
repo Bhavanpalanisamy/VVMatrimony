@@ -1,20 +1,24 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vvmatrimony/Common_Widgets/Common_Button.dart';
 import 'package:vvmatrimony/Common_Widgets/Custom_App_Bar.dart';
 import 'package:vvmatrimony/Common_Widgets/Text_Form_Field.dart';
 import 'package:vvmatrimony/Src/Registration_Ui/Family_Registration_Screen/Community_Registration_Screen.dart';
+import 'package:vvmatrimony/utilits/ApiService.dart';
 import 'package:vvmatrimony/utilits/Common_Colors.dart';
+import 'package:vvmatrimony/utilits/Generic.dart';
 import 'package:vvmatrimony/utilits/Text_Style.dart';
 
 
-class Family_Registration_Screen extends StatefulWidget {
+class Family_Registration_Screen extends ConsumerStatefulWidget {
   const Family_Registration_Screen({super.key});
 
   @override
-  State<Family_Registration_Screen> createState() => _Family_Registration_ScreenState();
+  ConsumerState<Family_Registration_Screen> createState() => _Family_Registration_ScreenState();
 }
 
-class _Family_Registration_ScreenState extends State<Family_Registration_Screen> {
+class _Family_Registration_ScreenState extends ConsumerState<Family_Registration_Screen> {
 
   RegExp onlyText = RegExp(r'^[a-zA-Z ]+$');
   //FAMILY MEMBER
@@ -238,7 +242,7 @@ class _Family_Registration_ScreenState extends State<Family_Registration_Screen>
           padding: const EdgeInsets.only(top: 30,bottom: 50),
           child: CommonElevatedButton(context, 'Next', () {
             if(_formKey.currentState!.validate()){
-             Navigator.push(context, MaterialPageRoute(builder: (context)=>Community_Registration_Screen()));
+              Registartion2ApiResponse();
             }
           }),
         )
@@ -360,6 +364,37 @@ class _Family_Registration_ScreenState extends State<Family_Registration_Screen>
       ],
     );
  }
+
+ //FAMILY REGISTRATION
+Registartion2ApiResponse() async{
+ final registration2ApiService = ApiService(ref.watch(dioProvider));
+
+ var formData = FormData.fromMap({
+   "user_id": await getuserId(),
+   "family_members": familyVal,
+   "father_name":_FatherName.text,
+   "father_occupation":_FatherOccupation.text,
+   "mother_name":_MotherName.text,
+   "mother_occupation":_MotherOccupation.text,
+   "native_location":nativeVal,
+   "married_sisters":marriedSisterVal,
+   "unmarried_sisters":UnmarriedSisterVal,
+   "married_brother":marriedBrotherVal,
+   "unmarried_brother":UnmarriedBrotherVal,
+ });
+
+ final Registration2Response = await registration2ApiService.registrationService2(context,formData);
+ print("FORM DATA :: ${formData}");
+ if(Registration2Response?.status == true){
+   ShowToastMessage(Registration2Response?.message ?? "");
+   print("FAMILY REGISTRATION SUCESS");
+   Navigator.push(context, MaterialPageRoute(builder: (context)=>Community_Registration_Screen()));
+
+ }else{
+   ShowToastMessage(Registration2Response?.message ?? "");
+   print("FAMILY REGISTRATION ERROR");
+ }
+}
 }
 
 

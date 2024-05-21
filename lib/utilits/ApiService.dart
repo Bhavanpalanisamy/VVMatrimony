@@ -126,7 +126,7 @@ class ApiService {
     return _requestPOST2<T>(path, data: data);
   }
 
-  Future<T> loginUser<T>(String path, FormData data) async {
+  Future<T> loginUser<T>(context,String path, FormData data) async {
     Dio dio = Dio();
 
     dio.options = BaseOptions(
@@ -139,7 +139,9 @@ class ApiService {
     );
 
     try {
+
       Response response = await dio.post(path, data: data);
+
       // Handle successful response
 
       print(response.data);
@@ -176,6 +178,37 @@ class ApiService {
       } catch (e) {
         print(result["response"]);
         ShowToastMessage(result['response']);
+
+        // Toast.show(result["response"], context);
+      }
+    }
+    return LoginModel();
+  }
+
+  //FAMILY REGISTRATION
+  Future<LoginModel> registrationService2(context,FormData formData) async {
+    final result = await requestPOST(
+        url: ConstantApi.registrationUrl2, formData: formData, dio: _dio);
+    LoadingOverlay.show(context);
+    if (result["success"] == true) {
+      LoadingOverlay.hide();
+
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+
+      return LoginModel?.fromJson(result["response"]);
+    } else {
+      try {
+        LoadingOverlay.hide();
+
+        var resultval = LoginModel.fromJson(result["response"]);
+
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        LoadingOverlay.hide();
+        print(result["response"]);
 
         // Toast.show(result["response"], context);
       }

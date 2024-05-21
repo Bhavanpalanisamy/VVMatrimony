@@ -13,6 +13,7 @@ import 'package:vvmatrimony/Src/Registration_Ui/Family_Registration_Screen/Famil
 import 'package:vvmatrimony/utilits/ApiService.dart';
 import 'package:vvmatrimony/utilits/Common_Colors.dart';
 import 'package:vvmatrimony/utilits/ConstantsApi.dart';
+import 'package:vvmatrimony/utilits/Generic.dart';
 import 'package:vvmatrimony/utilits/Text_Style.dart';
 
 class Yourdetails extends ConsumerStatefulWidget {
@@ -122,7 +123,7 @@ class _YourdetailsState extends ConsumerState<Yourdetails> {
                     ),
 
                     //MOBILE NUMBER
-                    Title_Style(Title: '"Email ID"', isStatus: null,),
+                    Title_Style(Title: 'Mobile Number', isStatus: null,),
 
                     textFormField(
                       // isEnabled: false,
@@ -263,6 +264,8 @@ Register1ApiResponse() async{
     print("GENDER  ::: ${Gender}");
     final Register1Response = await register1ApiService.post<LoginModel>(ConstantApi.registrationUrl1, formData);
     if(Register1Response?.status == true){
+      UserId(Register1Response?.userId ?? "");
+      print("USER ID :: ${Register1Response?.userId ?? ""}");
       Navigator.push(context, MaterialPageRoute(builder: (context)=>Family_Registration_Screen()));
     }else{
       print("ERROR");
