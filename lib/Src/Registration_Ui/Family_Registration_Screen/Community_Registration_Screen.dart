@@ -1,19 +1,24 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vvmatrimony/Common_Widgets/Common_Button.dart';
 import 'package:vvmatrimony/Common_Widgets/Custom_App_Bar.dart';
 import 'package:vvmatrimony/Common_Widgets/Text_Form_Field.dart';
 import 'package:vvmatrimony/Src/Registration_Ui/Family_Registration_Screen/Personel_Registration_Screen.dart';
+import 'package:vvmatrimony/utilits/ApiService.dart';
 import 'package:vvmatrimony/utilits/Common_Colors.dart';
 import 'package:vvmatrimony/utilits/Text_Style.dart';
 
-class Community_Registration_Screen extends StatefulWidget {
+import '../../../utilits/Generic.dart';
+
+class Community_Registration_Screen extends ConsumerStatefulWidget {
   const Community_Registration_Screen({super.key});
 
   @override
-  State<Community_Registration_Screen> createState() => _Community_Registration_ScreenState();
+  ConsumerState<Community_Registration_Screen> createState() => _Community_Registration_ScreenState();
 }
 
-class _Community_Registration_ScreenState extends State<Community_Registration_Screen> {
+class _Community_Registration_ScreenState extends ConsumerState<Community_Registration_Screen> {
   //RELIGION
   String? religionVal;
   List<String> religionOption = [
@@ -108,12 +113,33 @@ class _Community_Registration_ScreenState extends State<Community_Registration_S
         Padding(
           padding: const EdgeInsets.only(bottom: 50),
           child: CommonElevatedButton(context, 'Next', () {
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>Personel_Registration_Screen()));
-
+            Registartion3ApiResponse();
           }),
         ),
 
       ],
     );
+  }
+
+  Registartion3ApiResponse() async{
+    final registration3ApiService = ApiService(ref.watch(dioProvider));
+    var formDate = FormData.fromMap({
+      'user_id':await getuserId(),
+      'religion':religionVal,
+      'mother_tongue':motherTongueVal,
+      'caste':casteVal,
+      'sub_caste':'none'
+    });
+    final Registration3Response = await registration3ApiService.registrationService3(context,formDate);
+    print("FORM DATA :: ${formDate}");
+    if(Registration3Response?.status == true){
+      ShowToastMessage(Registration3Response?.message ?? "");
+      print("COMMUNITY REGISTRATION SUCESS");
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>Personel_Registration_Screen()));
+
+    }else{
+      ShowToastMessage(Registration3Response?.message ?? "");
+      print("COMMUNITY REGISTRATION ERROR");
+    }
   }
 }

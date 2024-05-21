@@ -386,7 +386,7 @@ Registartion2ApiResponse() async{
  final Registration2Response = await registration2ApiService.registrationService2(context,formData);
  print("FORM DATA :: ${formData}");
  if(Registration2Response?.status == true){
-   ShowToastMessage(Registration2Response?.message ?? "");
+     ShowToastMessage(Registration2Response?.message ?? "");
    print("FAMILY REGISTRATION SUCESS");
    Navigator.push(context, MaterialPageRoute(builder: (context)=>Community_Registration_Screen()));
 
