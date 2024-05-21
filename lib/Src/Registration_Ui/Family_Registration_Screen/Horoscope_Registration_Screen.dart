@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:vvmatrimony/Common_Widgets/Common_Button.dart';
 import 'package:vvmatrimony/Common_Widgets/Custom_App_Bar.dart';
 import 'package:vvmatrimony/Common_Widgets/Text_Form_Field.dart';
-import 'package:vvmatrimony/Src/Registration_Ui/Family_Registration_Screen/Professional_Registration_Screen.dart';
+//import 'package:vvmatrimony/Src/Registration_Ui/Family_Registration_Screen/Professional_Registration_Screen.dart';
+import 'package:vvmatrimony/Src/Registration_Ui/Family_Registration_Screen/Professional_Registration_Screen2.dart';
 import 'package:vvmatrimony/utilits/Common_Colors.dart';
 import 'package:vvmatrimony/utilits/Text_Style.dart';
 
@@ -31,8 +32,8 @@ class _Horoscope_Registration_ScreenState extends State<Horoscope_Registration_S
   //DOSHAM
   String? doshamVal;
   List<String> doshamOption = [
-    "Naga Dosham",
-    "Naga Dosham",
+    "Yes",
+    "No",
   ];
   @override
   Widget build(BuildContext context) {
@@ -105,7 +106,7 @@ class _Horoscope_Registration_ScreenState extends State<Horoscope_Registration_S
         Padding(
           padding: const EdgeInsets.only(bottom: 50),
           child: CommonElevatedButton(context, 'Next', () {
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>Professional_Register_Screen()));
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>Professional_Registration_Screen2()));
 
           }),
         ),
