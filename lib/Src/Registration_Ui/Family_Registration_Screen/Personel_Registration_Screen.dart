@@ -1,20 +1,24 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vvmatrimony/Common_Widgets/Common_Button.dart';
 import 'package:vvmatrimony/Common_Widgets/Custom_App_Bar.dart';
 import 'package:vvmatrimony/Common_Widgets/Text_Form_Field.dart';
 import 'package:vvmatrimony/Src/Registration_Ui/Family_Registration_Screen/Horoscope_Registration_Screen.dart';
+import 'package:vvmatrimony/utilits/ApiService.dart';
 import 'package:vvmatrimony/utilits/Common_Colors.dart';
+import 'package:vvmatrimony/utilits/Generic.dart';
 import 'package:vvmatrimony/utilits/Text_Style.dart';
 
-class Personel_Registration_Screen extends StatefulWidget {
+class Personel_Registration_Screen extends ConsumerStatefulWidget {
   const Personel_Registration_Screen({super.key});
 
   @override
-  State<Personel_Registration_Screen> createState() => _Personel_Registration_ScreenState();
+  ConsumerState<Personel_Registration_Screen> createState() => _Personel_Registration_ScreenState();
 }
 
-class _Personel_Registration_ScreenState extends State<Personel_Registration_Screen> {
+class _Personel_Registration_ScreenState extends ConsumerState<Personel_Registration_Screen> {
   //MARTIAL STATUS
   String? martialVal;
   List<String> martialOption = [
@@ -155,10 +159,36 @@ class _Personel_Registration_ScreenState extends State<Personel_Registration_Scr
         Padding(
           padding: const EdgeInsets.only(bottom: 50),
           child: CommonElevatedButton(context, 'Next', () {
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>Horoscope_Registration_Screen()));
+            Registration4ApiResponse();
           }),
         ),
       ],
     );
   }
+  //PERSONAL REGISTRATION
+ Registration4ApiResponse() async{
+    final registration4ApiService = ApiService(ref.watch(dioProvider));
+    var formData = FormData.fromMap({
+      "user_id":await getuserId(),
+      "height":_Height.text,
+      "weight":_Weight.text,
+      "maritial_status":martialVal,
+      "any_disability":disabilityVal,
+      "family_type":familyTypeVal
+    });
+    print("MARTIAL STATUS :: ${martialVal}");
+    print("DISABILITY :: ${disabilityVal}");
+    print("FAMILY TYPE :: ${familyTypeVal}");
+
+    final Registration4Response = await registration4ApiService.registrationService4(context, formData);
+
+    if(Registration4Response?.status == true){
+      print("PERSONAL REGISTER SUCESS");
+      ShowToastMessage(Registration4Response?.message ?? "");
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>Horoscope_Registration_Screen()));
+    }else{
+      print("PERSONAL REGISTER ERROR");
+      ShowToastMessage(Registration4Response?.message ?? "");
+    }
+ }
 }

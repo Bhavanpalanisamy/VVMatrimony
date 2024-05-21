@@ -1,21 +1,27 @@
 import 'dart:async';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vvmatrimony/Common_Widgets/Common_Button.dart';
 import 'package:vvmatrimony/Common_Widgets/Custom_App_Bar.dart';
+import 'package:vvmatrimony/Src/Home_Dashboard_Ui/Home_Dashboard_Screen.dart';
 import 'package:vvmatrimony/Src/YourDetails_Ui/YourDetails_Screen.dart';
+import 'package:vvmatrimony/utilits/ApiService.dart';
 import 'package:vvmatrimony/utilits/Common_Colors.dart';
+import 'package:vvmatrimony/utilits/Generic.dart';
 import 'package:vvmatrimony/utilits/Text_Style.dart';
 
-class OTP extends StatefulWidget {
-  const OTP({super.key});
+class OTP extends ConsumerStatefulWidget {
+  final String mobileNumber;
+   OTP({super.key,required this.mobileNumber});
 
   @override
-  State<OTP> createState() => _OTPState();
+  ConsumerState<OTP> createState() => _OTPState();
 }
 
-class _OTPState extends State<OTP> {
+class _OTPState extends ConsumerState<OTP> {
   final _formkey = GlobalKey<FormState>();
   TextEditingController _MobileNumber = TextEditingController();
 
@@ -107,45 +113,112 @@ class _OTPState extends State<OTP> {
     return Scaffold(
       backgroundColor: backGroundColor,
       appBar: Custom_AppBar_Logo(title: '', actions: [], isNav: true,),
-      body: Padding(
-        padding: const EdgeInsets.only(left: 20,right: 20,top: 20),
-        child: Column(
-            children: [
-              
-              Code(text: 'Verification Code', style: Textfield_Style2),
-              Code(text: 'Please enter code we just send to', style: sub_ContentST),
-              Code1(text: '+91-1234567890', style: Textfield_Style1),
+      body: Form(
+        key: _formkey,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 20,right: 20,top: 20),
+          child: Column(
+              children: [
 
-              // OTP
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  _textFieldOTP(first: true, last: true, controllers: _OTP1),
-                  _textFieldOTP(first: true, last: true, controllers: _OTP2),
-                  _textFieldOTP(first: true, last: true, controllers: _OTP3),
-                  _textFieldOTP(first: true, last: true, controllers: _OTP4),
-                ],
-              ),
+                Code(text: 'Verification Code', style: Textfield_Style2),
+                Code(text: 'Please enter code we just send to', style: sub_ContentST),
+                Code1(text: '+91-1234567890', style: Textfield_Style1),
 
-              // ON TAP TEXT
-              ontap1(text: 'Didn’t receive OTP?', style: onClicked_TextC),
-              Underlinetext(),
+                // OTP
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    _textFieldOTP(first: true, last: true, controllers: _OTP1),
+                    _textFieldOTP(first: true, last: true, controllers: _OTP2),
+                    _textFieldOTP(first: true, last: true, controllers: _OTP3),
+                    _textFieldOTP(first: true, last: true, controllers: _OTP4),
+                  ],
+                ),
 
-              const Spacer(),
+                // ON TAP TEXT
+                ontap1(text: 'Didn’t receive OTP?', style: onClicked_TextC),
+                InkWell(
+                  onTap: (){
+                    ResendVerificationApiResponse();
+                    _startTimer();
+                  },
+                    child: Text(
+                      _isTimerActive
+                          ? 'Resend OTP'
+                          : 'Resend OTP',
+                      style: TextStyle(
+                          color: _isTimerActive
+                              ? red1
+                              : Color.fromRGBO(34, 152, 255, 1),
+                          fontFamily: 'Inter',
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400
+                      ),
+                    ),
+                    ),
+                Container(
+                  alignment: Alignment.center,
+                  child: Text(
+                      _isTimerActive ? "00:$_timeLeft" :
+                      "",
+                      // style: changeT,
+                      style: TextStyle(color: red1)
+                  ),
+                ),
 
-              // BUTTON
-              Padding(
-                padding: const EdgeInsets.only(left: 15,right: 15,bottom: 50),
-                child: CommonElevatedButton(context, 'Verify', () {if(_formkey.currentState!.validate()){
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => Yourdetails()));
-                };}),
-              ),
-            ],
+                const Spacer(),
+
+                // BUTTON
+                Padding(
+                  padding: const EdgeInsets.only(left: 15,right: 15,bottom: 50),
+                  child: CommonElevatedButton(context, 'Verify', () {
+                    if(_formkey.currentState!.validate()){
+                    OtpVerificationApiResponse();
+                  };
+
+                  }),
+                ),
+              ],
+          ),
         ),
       ),
 
     );
+  }
+  //OTP VERIFICATION API RESPONSE
+  OtpVerificationApiResponse() async{
+    final otpApiService = ApiService(ref.watch(dioProvider));
+    var formData = FormData.fromMap({
+      "user_id":await getuserId(),
+      "otp":"${_OTP1.text}${_OTP2.text}${_OTP3.text}${_OTP4.text}"
+    });
+    final OtpResponse = await otpApiService.otpApiService(context, formData);
+    if(OtpResponse?.status == true){
+      print("OTP VERIFICATION SUCCESS");
+      ShowToastMessage(OtpResponse?.message ?? "");
+      Navigator.push(context, MaterialPageRoute(builder: (context) => HomeDashboard()));
+    }else{
+      print("OTP VERIFICATION ERROR");
+      ShowToastMessage(OtpResponse?.message ?? "");
+    }
+  }
+
+  //OTP RESEND VERIFICATION
+  ResendVerificationApiResponse() async{
+    final resendOtpApiService = ApiService(ref.watch(dioProvider));
+    var formData = FormData.fromMap({
+      "user_id":await getuserId(),
+    });
+    final ResendOtpResponse = await resendOtpApiService.resendOtpApiService(context, formData);
+    if(ResendOtpResponse?.status == true){
+      print("RESEND OTP VERIFICATION SUCCESS");
+      ShowToastMessage(ResendOtpResponse?.message ?? "");
+      // Navigator.push(context, MaterialPageRoute(builder: (context) => HomeDashboard()));
+    }else{
+      print("RESEND OTP VERIFICATION ERROR");
+      ShowToastMessage(ResendOtpResponse?.message ?? "");
+    }
   }
 }
 

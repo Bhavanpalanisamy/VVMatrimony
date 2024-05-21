@@ -392,6 +392,7 @@ Registartion2ApiResponse() async{
 
  }else{
    ShowToastMessage(Registration2Response?.message ?? "");
+
    print("FAMILY REGISTRATION ERROR");
  }
 }

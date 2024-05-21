@@ -160,25 +160,29 @@ class ApiService {
     }
   }
 
-  Future<LoginModel> registrationService(FormData formData) async {
+  Future<LoginModel> registrationService(context,FormData formData) async {
     final result = await requestPOST(
         url: ConstantApi.registrationUrl1, formData: formData, dio: _dio);
+    LoadingOverlay.show(context);
 
     if (result["success"] == true) {
+      LoadingOverlay.hide();
+
       print("resultOTP:$result");
       print("resultOTPsss:${result["success"]}");
       return LoginModel?.fromJson(result["response"]);
     } else {
       try {
+        LoadingOverlay.hide();
+
         var resultval = LoginModel.fromJson(result["response"]);
-        ShowToastMessage(resultval?.message ?? "");
         // Toast.show(resultval.message.toString(), context);
         print(result["response"]);
         return resultval;
       } catch (e) {
-        print(result["response"]);
-        ShowToastMessage(result['response']);
+        LoadingOverlay.hide();
 
+        print(result["response"]);
         // Toast.show(result["response"], context);
       }
     }
@@ -215,6 +219,100 @@ class ApiService {
     }
     return LoginModel();
   }
+
+  //PERSONEL REGISTRATION API
+  Future<LoginModel> registrationService4(context,FormData formData) async {
+    final result = await requestPOST(
+        url: ConstantApi.registrationUrl4, formData: formData, dio: _dio);
+    LoadingOverlay.show(context);
+    if (result["success"] == true) {
+      LoadingOverlay.hide();
+
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+
+      return LoginModel?.fromJson(result["response"]);
+    } else {
+      try {
+        LoadingOverlay.hide();
+
+        var resultval = LoginModel.fromJson(result["response"]);
+
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        LoadingOverlay.hide();
+        print(result["response"]);
+
+        // Toast.show(result["response"], context);
+      }
+    }
+    return LoginModel();
+  }
+
+  //OTP VERIFICATION
+  Future<LoginModel> otpApiService(context,FormData formData) async {
+    final result = await requestPOST(
+        url: ConstantApi.otpVerificationUrl, formData: formData, dio: _dio);
+    LoadingOverlay.show(context);
+    if (result["success"] == true) {
+      LoadingOverlay.hide();
+
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+
+      return LoginModel?.fromJson(result["response"]);
+    } else {
+      try {
+        LoadingOverlay.hide();
+
+        var resultval = LoginModel.fromJson(result["response"]);
+
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        LoadingOverlay.hide();
+        print(result["response"]);
+
+        // Toast.show(result["response"], context);
+      }
+    }
+    return LoginModel();
+  }
+
+  //OTP RESEND VERIFICATION API
+  Future<LoginModel> resendOtpApiService(context,FormData formData) async {
+    final result = await requestPOST(
+        url: ConstantApi.otpResentUrl, formData: formData, dio: _dio);
+    LoadingOverlay.show(context);
+    if (result["success"] == true) {
+      LoadingOverlay.hide();
+
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+
+      return LoginModel?.fromJson(result["response"]);
+    } else {
+      try {
+        LoadingOverlay.hide();
+
+        var resultval = LoginModel.fromJson(result["response"]);
+
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        LoadingOverlay.hide();
+        print(result["response"]);
+
+        // Toast.show(result["response"], context);
+      }
+    }
+    return LoginModel();
+  }
+
 
 
 }

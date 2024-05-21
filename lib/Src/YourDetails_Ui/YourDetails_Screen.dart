@@ -262,12 +262,15 @@ Register1ApiResponse() async{
       "about_you":_AboutYou.text
     });
     print("GENDER  ::: ${Gender}");
-    final Register1Response = await register1ApiService.post<LoginModel>(ConstantApi.registrationUrl1, formData);
+    final Register1Response = await register1ApiService.registrationService(context, formData);
     if(Register1Response?.status == true){
+      ShowToastMessage(Register1Response?.message ?? "");
+
       UserId(Register1Response?.userId ?? "");
       print("USER ID :: ${Register1Response?.userId ?? ""}");
       Navigator.push(context, MaterialPageRoute(builder: (context)=>Family_Registration_Screen()));
     }else{
+      ShowToastMessage(Register1Response?.message ?? "");
       print("ERROR");
     }
 

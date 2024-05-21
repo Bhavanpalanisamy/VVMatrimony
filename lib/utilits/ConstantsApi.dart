@@ -7,6 +7,9 @@ class ConstantApi {
   static String logOutUrl = SERVER_ONE + "authentication/logout";
   static String registrationUrl1 = SERVER_ONE + "authentication/registration1";
   static String registrationUrl2 = SERVER_ONE + "authentication/registration2";
+  static String registrationUrl4 = SERVER_ONE + "authentication/registration4";
+  static String otpVerificationUrl = SERVER_ONE + "authentication/otp_verification";
+  static String otpResentUrl = SERVER_ONE + "authentication/resend_otp";
 
 
   static String SOMETHING_WRONG = "Some thing wrong";

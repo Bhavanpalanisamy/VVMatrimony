@@ -96,7 +96,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       "mobile":_MobileNumber.text,
     });
 
-    final LoginResponse = await loginApiService.post<LoginModel>(ConstantApi.loginUrl, formData);
+    final LoginResponse = await loginApiService.loginUser<LoginModel>(context,ConstantApi.loginUrl, formData);
 
     LoadingOverlay.show(context);
 
@@ -105,7 +105,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       ShowToastMessage(LoginResponse?.message ?? "");
       UserId(LoginResponse?.userId ?? "");
       print("USER ID :: ${LoginResponse?.userId ?? ""}");
-      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomeDashboard()), (route) => false);
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>OTP(mobileNumber: _MobileNumber.text)));
     }else{
       LoadingOverlay.hide();
       ShowToastMessage(LoginResponse?.message ?? "");
