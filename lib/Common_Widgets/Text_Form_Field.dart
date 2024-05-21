@@ -218,7 +218,7 @@ Widget textfieldDescription({
         filled: true,
       ),
       textInputAction: TextInputAction.next,
-      style: Textfield_Style2,
+      style: Textfield_Style1,
     ),
   );
 }
