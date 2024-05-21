@@ -1,21 +1,27 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vvmatrimony/Common_Widgets/Common_Button.dart';
 import 'package:vvmatrimony/Common_Widgets/Custom_App_Bar.dart';
 import 'package:vvmatrimony/Common_Widgets/Text_Form_Field.dart';
 import 'package:vvmatrimony/Src/Profile_Completed_Ui/Profile_Completed_Screen.dart';
 import 'package:vvmatrimony/Src/Registration_Ui/Family_Registration_Screen/Horoscope_Registration_Screen.dart';
+import 'package:vvmatrimony/Src/Upload_Your_Photo_Ui/Upload_Your_Photo_Screen.dart';
 import 'package:vvmatrimony/utilits/Common_Colors.dart';
 import 'package:vvmatrimony/utilits/Text_Style.dart';
 
-class Expectation_Registration_Screen extends StatefulWidget {
+import '../../../utilits/ApiService.dart';
+import '../../../utilits/Generic.dart';
+
+class Expectation_Registration_Screen extends ConsumerStatefulWidget {
   const Expectation_Registration_Screen({super.key});
 
   @override
-  State<Expectation_Registration_Screen> createState() => _Expectation_Registration_ScreenState();
+  ConsumerState<Expectation_Registration_Screen> createState() => _Expectation_Registration_ScreenState();
 }
 
-class _Expectation_Registration_ScreenState extends State<Expectation_Registration_Screen> {
+class _Expectation_Registration_ScreenState extends ConsumerState<Expectation_Registration_Screen> {
   //MARTIAL STATUS
   String? martialVal;
   List<String> martialOption = [
@@ -200,10 +206,34 @@ class _Expectation_Registration_ScreenState extends State<Expectation_Registrati
         Padding(
           padding: const EdgeInsets.only(top: 50),
           child: CommonElevatedButton(context, 'Next', () {
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>Profile_Completed_Screen()));
+            Registartion7ApiResponse();
           }),
         ),
       ],
     );
+  }
+  Registartion7ApiResponse() async{
+    final registration7ApiService = ApiService(ref.watch(dioProvider));
+    var fromdate = FormData.fromMap({
+      'user_id':await getuserId(),
+      'exp_height': _Height,
+      'exp_weight':_Weight,
+      'exp_maritial_status':martialVal,
+      'exp_education': _Education,
+      'exp_occupation':_Occupation,
+      'exp_salary':_Salary,
+      'exp_location':_Location,
+    });
+    final Registration7Response = await registration7ApiService.registrationService7(context,fromdate);
+    print("FORM DATA :: ${fromdate}");
+    if(Registration7Response?.status == true){
+      ShowToastMessage(Registration7Response?.message ?? "");
+      print("EXPECTATION REGISTRATION SUCESS");
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>Upload_Your_Photo_Screen()));
+
+    }else{
+      ShowToastMessage(Registration7Response?.message ?? "");
+      print("EXPECTATION REGISTRATION ERROR");
+    }
   }
 }

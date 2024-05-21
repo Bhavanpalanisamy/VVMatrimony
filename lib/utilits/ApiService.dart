@@ -216,6 +216,123 @@ class ApiService {
     return LoginModel();
   }
 
+  //COMMUNITY REGISTRATION
+  Future<LoginModel> registrationService3(context,FormData formData) async {
+    final result = await requestPOST(
+        url: ConstantApi.registrationUrl3, formData: formData, dio: _dio);
+    LoadingOverlay.show(context);
+    if (result["success"] == true) {
+      LoadingOverlay.hide();
+
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+
+      return LoginModel?.fromJson(result["response"]);
+    } else {
+      try {
+        LoadingOverlay.hide();
+        var resultval = LoginModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        LoadingOverlay.hide();
+        print(result["response"]);
+
+        // Toast.show(result["response"], context);
+      }
+    }
+    return LoginModel();
+  }
+
+  //FAMILY REGISTRATION
+  Future<LoginModel> registrationService5(context,FormData formData) async {
+    final result = await requestPOST(
+        url: ConstantApi.registrationUrl5, formData: formData, dio: _dio);
+    LoadingOverlay.show(context);
+    if (result["success"] == true) {
+      LoadingOverlay.hide();
+
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+
+      return LoginModel?.fromJson(result["response"]);
+    } else {
+      try {
+        LoadingOverlay.hide();
+
+        var resultval = LoginModel.fromJson(result["response"]);
+
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        LoadingOverlay.hide();
+        print(result["response"]);
+
+        // Toast.show(result["response"], context);
+      }
+    }
+    return LoginModel();
+  }
+
+  //COMMUNITY REGISTRATION
+  Future<LoginModel> registrationService6(context,FormData formData) async {
+    final result = await requestPOST(
+        url: ConstantApi.registrationUrl6, formData: formData, dio: _dio);
+    LoadingOverlay.show(context);
+    if (result["success"] == true) {
+      LoadingOverlay.hide();
+
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+
+      return LoginModel?.fromJson(result["response"]);
+    } else {
+      try {
+        LoadingOverlay.hide();
+        var resultval = LoginModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        LoadingOverlay.hide();
+        print(result["response"]);
+
+        // Toast.show(result["response"], context);
+      }
+    }
+    return LoginModel();
+  }
+
+  //EXPECTATION REGISTRATION
+  Future<LoginModel> registrationService7(context,FormData formData) async {
+    final result = await requestPOST(
+        url: ConstantApi.registrationUrl7, formData: formData, dio: _dio);
+    LoadingOverlay.show(context);
+    if (result["success"] == true) {
+      LoadingOverlay.hide();
+
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+
+      return LoginModel?.fromJson(result["response"]);
+    } else {
+      try {
+        LoadingOverlay.hide();
+        var resultval = LoginModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        LoadingOverlay.hide();
+        print(result["response"]);
+
+        // Toast.show(result["response"], context);
+      }
+    }
+    return LoginModel();
+  }
 
 }
 

@@ -1,18 +1,22 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vvmatrimony/Src/Registration_Ui/Family_Registration_Screen/Expectation_Registration_Screen.dart';
 
 import '../../../Common_Widgets/Common_Button.dart';
 import '../../../Common_Widgets/Custom_App_Bar.dart';
 import '../../../Common_Widgets/Text_Form_Field.dart';
+import '../../../utilits/ApiService.dart';
+import '../../../utilits/Generic.dart';
 import '../../../utilits/Text_Style.dart';
-class Professional_Registration_Screen2 extends StatefulWidget {
+class Professional_Registration_Screen2 extends ConsumerStatefulWidget {
   const Professional_Registration_Screen2({super.key});
 
   @override
-  State<Professional_Registration_Screen2> createState() => _Professional_Registration_Screen2State();
+  ConsumerState<Professional_Registration_Screen2> createState() => _Professional_Registration_Screen2State();
 }
 
-class _Professional_Registration_Screen2State extends State<Professional_Registration_Screen2> {
+class _Professional_Registration_Screen2State extends ConsumerState<Professional_Registration_Screen2> {
   //EMPLOYEE IN
   String? employeeVal;
   List<String> employeeOption = [
@@ -150,7 +154,7 @@ class _Professional_Registration_Screen2State extends State<Professional_Registr
               Padding(
                 padding: const EdgeInsets.only(bottom: 50,top: 50),
                 child: CommonElevatedButton(context, 'Next', () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>Expectation_Registration_Screen()));
+                  Registartion6ApiResponse();
                 }),
               )
             ],
@@ -158,5 +162,29 @@ class _Professional_Registration_Screen2State extends State<Professional_Registr
         ),
       ),
     );
+  }
+
+  Registartion6ApiResponse() async{
+    final registration6ApiService = ApiService(ref.watch(dioProvider));
+    var fromdate = FormData.fromMap({
+      'user_id':await getuserId(),
+      'education':_Education,
+      'employeed_in':employeeVal,
+      'company_name':_CompanyName,
+      'occupation':_Occupation,
+      'annual_income':_AnnualIncome,
+      'work_location':_WorkLocation,
+    });
+    final Registration6Response = await registration6ApiService.registrationService6(context,fromdate);
+    print("FORM DATA :: ${fromdate}");
+    if(Registration6Response?.status == true){
+      ShowToastMessage(Registration6Response?.message ?? "");
+      print("PROFESSIONAL REGISTRATION SUCESS");
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>Expectation_Registration_Screen()));
+
+    }else{
+      ShowToastMessage(Registration6Response?.message ?? "");
+      print("PROFESSIONAL REGISTRATION ERROR");
+    }
   }
 }
