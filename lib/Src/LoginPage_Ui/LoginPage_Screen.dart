@@ -1,22 +1,31 @@
+
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vvmatrimony/Common_Widgets/Common_Button.dart';
 import 'package:vvmatrimony/Common_Widgets/Image_Picker.dart';
 import 'package:vvmatrimony/Common_Widgets/Text_Form_Field.dart';
+import 'package:vvmatrimony/Model/LoginModel.dart';
 import 'package:vvmatrimony/Src/Home_Dashboard_Ui/Home_Dashboard_Screen.dart';
 import 'package:vvmatrimony/Src/OTP_Ui/OTP_Screen.dart';
 import 'package:vvmatrimony/Src/YourDetails_Ui/YourDetails_Screen.dart';
+import 'package:vvmatrimony/utilits/ApiService.dart';
 import 'package:vvmatrimony/utilits/Common_Colors.dart';
+import 'package:vvmatrimony/utilits/ConstantsApi.dart';
+import 'package:vvmatrimony/utilits/Generic.dart';
+import 'package:vvmatrimony/utilits/Loading_Overlay.dart';
 import 'package:vvmatrimony/utilits/Text_Style.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  ConsumerState<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends ConsumerState<LoginPage> {
   final _formkey = GlobalKey<FormState>();
   TextEditingController _MobileNumber = TextEditingController();
   @override
@@ -64,8 +73,9 @@ class _LoginPageState extends State<LoginPage> {
 
             Padding(
               padding: const EdgeInsets.only(left: 15,right: 15,bottom: 30),
-              child: CommonElevatedButton(context, 'Login', () {if(_formkey.currentState!.validate()){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => HomeDashboard()));
+              child: CommonElevatedButton(context, 'Login', () {
+                if(_formkey.currentState!.validate()){
+                  LoginApiResponse();
               };}),
             ),
 
@@ -80,6 +90,21 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+  LoginApiResponse() async{
+    final loginApiService = ApiService(ref.watch(dioProvider));
+    var formData = FormData.fromMap({
+      "mobile":"2222222222",
+    });
+
+    final LoginResponse = await loginApiService.post<LoginModel>(ConstantApi.loginUrl, formData);
+
+    if(LoginResponse?.status == true){
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomeDashboard()), (route) => false);
+    }else{
+      print('ERROR');
+    }
+  }
+
 }
 
 Widget Letsstart(){
