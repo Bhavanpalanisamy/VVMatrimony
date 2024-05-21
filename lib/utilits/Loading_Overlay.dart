@@ -20,10 +20,10 @@ class LoadingOverlay {
             ),
             const Center(
               child: SpinKitWaveSpinner(
-                trackColor: blue3,
+                trackColor: pink1,
                 color: Colors.black,
                 size: 70,
-                waveColor: Colors.white,
+                waveColor: backGroundColor,
                 curve: Curves.bounceInOut,
               ),
             ),

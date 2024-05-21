@@ -1,28 +1,35 @@
 
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:vvmatrimony/Common_Widgets/Common_Button.dart';
 import 'package:vvmatrimony/Common_Widgets/Custom_App_Bar.dart';
 import 'package:vvmatrimony/Common_Widgets/Text_Form_Field.dart';
+import 'package:vvmatrimony/Model/LoginModel.dart';
 import 'package:vvmatrimony/Src/Registration_Ui/Family_Registration_Screen/Family_Registration_Screen.dart';
+import 'package:vvmatrimony/utilits/ApiService.dart';
 import 'package:vvmatrimony/utilits/Common_Colors.dart';
+import 'package:vvmatrimony/utilits/ConstantsApi.dart';
 import 'package:vvmatrimony/utilits/Text_Style.dart';
 
-class Yourdetails extends StatefulWidget {
+class Yourdetails extends ConsumerStatefulWidget {
   const Yourdetails({super.key});
 
   @override
-  State<Yourdetails> createState() => _YourdetailsState();
+  ConsumerState<Yourdetails> createState() => _YourdetailsState();
 }
 
-class _YourdetailsState extends State<Yourdetails> {
+class _YourdetailsState extends ConsumerState<Yourdetails> {
   final _formkey = GlobalKey<FormState>();
   TextEditingController _Name = TextEditingController();
   TextEditingController _email = TextEditingController();
   TextEditingController _Age = TextEditingController();
   TextEditingController _Dob = TextEditingController();
+  TextEditingController _MobileNumber = TextEditingController();
+  TextEditingController _AboutYou = TextEditingController();
 
   // GENDER
   String? Gender;
@@ -114,6 +121,28 @@ class _YourdetailsState extends State<Yourdetails> {
                       },
                     ),
 
+                    //MOBILE NUMBER
+                    Title_Style(Title: '"Email ID"', isStatus: null,),
+
+                    textFormField(
+                      // isEnabled: false,
+                        hintText: "Mobile Number",
+                        keyboardtype: TextInputType.phone,
+                        Controller: _MobileNumber,
+                        inputFormatters: [
+                          LengthLimitingTextInputFormatter(10),
+                          FilteringTextInputFormatter.digitsOnly],
+                        onChanged: null,
+                        validating:(value){
+                          if (value!.isEmpty) {
+                            return 'Please enter a mobile number';
+                          } else if (!RegExp(r'^[0-9]{10}$').hasMatch(value)) {
+                            return 'Please enter a valid 10-digit mobile number';
+                          }
+                          return null;
+                        }
+                    ),
+
                     // TEXTFORM FILED AGE
 
                     Title_Style(Title: '"Your Age"', isStatus: null,),
@@ -195,7 +224,11 @@ class _YourdetailsState extends State<Yourdetails> {
                     // DECSRIPTION
 
                     Title_Style(Title: '"About You"', isStatus: null,),
-                    textfieldDescription(hintText: 'Type...'),
+                    textfieldDescription(
+                        hintText: 'Type...',
+                        Controller:_AboutYou,
+
+                    ),
 
 
                     // BUTTON
@@ -203,7 +236,7 @@ class _YourdetailsState extends State<Yourdetails> {
                       padding: const EdgeInsets.only(top: 30,bottom: 50),
                       child: CommonElevatedButton(context, 'Next', () {
                         if(_formkey.currentState!.validate()){
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>Family_Registration_Screen()));
+                          Register1ApiResponse();
                       };
                       }),
                     ),
@@ -216,6 +249,25 @@ class _YourdetailsState extends State<Yourdetails> {
         ),
     );
   }
+Register1ApiResponse() async{
+    final register1ApiService =ApiService(ref.watch(dioProvider));
+    var formData = FormData.fromMap({
+      "name":_Name.text,
+      "email":_email.text,
+      "phone":_MobileNumber.text,
+      "age":_Age.text,
+      "dob":_Dob.text,
+      "gender":Gender,
+      "about_you":_AboutYou.text
+    });
+    print("GENDER  ::: ${Gender}");
+    final Register1Response = await register1ApiService.post<LoginModel>(ConstantApi.registrationUrl1, formData);
+    if(Register1Response?.status == true){
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>Family_Registration_Screen()));
+    }else{
+      print("ERROR");
+    }
 
+}
 }
 
