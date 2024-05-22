@@ -8,7 +8,9 @@ import 'package:vvmatrimony/Common_Widgets/Text_Form_Field.dart';
 import 'package:vvmatrimony/Src/Profile_Completed_Ui/Profile_Completed_Screen.dart';
 import 'package:vvmatrimony/Src/Registration_Ui/Family_Registration_Screen/Horoscope_Registration_Screen.dart';
 import 'package:vvmatrimony/Src/Upload_Your_Photo_Ui/Upload_Your_Photo_Screen.dart';
+import 'package:vvmatrimony/utilits/ApiProvider.dart';
 import 'package:vvmatrimony/utilits/Common_Colors.dart';
+import 'package:vvmatrimony/utilits/Loading_Overlay.dart';
 import 'package:vvmatrimony/utilits/Text_Style.dart';
 
 import '../../../utilits/ApiService.dart';
@@ -214,7 +216,7 @@ class _Expectation_Registration_ScreenState extends ConsumerState<Expectation_Re
   }
   Registartion7ApiResponse() async{
     final registration7ApiService = ApiService(ref.watch(dioProvider));
-    var fromdate = FormData.fromMap({
+    var formdata = FormData.fromMap({
       'user_id':await getuserId(),
       'exp_height': _Height.text,
       'exp_weight':_Weight.text,
@@ -224,14 +226,17 @@ class _Expectation_Registration_ScreenState extends ConsumerState<Expectation_Re
       'exp_salary':_Salary.text,
       'exp_location':_Location.text,
     });
-    final Registration7Response = await registration7ApiService.registrationService7(context,fromdate);
-    print("FORM DATA :: ${fromdate}");
+    final Registration7Response = await ref.watch(registration7Provider(formdata).future);
+    LoadingOverlay.show(context);
+    print("FORM DATA :: ${formdata}");
     if(Registration7Response?.status == true){
+      LoadingOverlay.hide();
       ShowToastMessage(Registration7Response?.message ?? "");
       print("EXPECTATION REGISTRATION SUCESS");
       Navigator.push(context, MaterialPageRoute(builder: (context)=>Upload_Your_Photo_Screen()));
 
     }else{
+      LoadingOverlay.hide();
       ShowToastMessage(Registration7Response?.message ?? "");
       print("EXPECTATION REGISTRATION ERROR");
     }

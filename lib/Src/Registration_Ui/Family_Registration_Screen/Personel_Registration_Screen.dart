@@ -6,9 +6,11 @@ import 'package:vvmatrimony/Common_Widgets/Common_Button.dart';
 import 'package:vvmatrimony/Common_Widgets/Custom_App_Bar.dart';
 import 'package:vvmatrimony/Common_Widgets/Text_Form_Field.dart';
 import 'package:vvmatrimony/Src/Registration_Ui/Family_Registration_Screen/Horoscope_Registration_Screen.dart';
+import 'package:vvmatrimony/utilits/ApiProvider.dart';
 import 'package:vvmatrimony/utilits/ApiService.dart';
 import 'package:vvmatrimony/utilits/Common_Colors.dart';
 import 'package:vvmatrimony/utilits/Generic.dart';
+import 'package:vvmatrimony/utilits/Loading_Overlay.dart';
 import 'package:vvmatrimony/utilits/Text_Style.dart';
 
 class Personel_Registration_Screen extends ConsumerStatefulWidget {
@@ -180,14 +182,16 @@ class _Personel_Registration_ScreenState extends ConsumerState<Personel_Registra
     print("DISABILITY :: ${disabilityVal}");
     print("FAMILY TYPE :: ${familyTypeVal}");
 
-    final Registration4Response = await registration4ApiService.registrationService4(context, formData);
-
+    final Registration4Response = await ref.watch(registration4Provider(formData).future);
+    LoadingOverlay.show(context);
     if(Registration4Response?.status == true){
-      print("PERSONAL REGISTER SUCESS");
+      LoadingOverlay.hide();
+      print("PERSONAL INFORMATION REGISTER SUCESS");
       ShowToastMessage(Registration4Response?.message ?? "");
       Navigator.push(context, MaterialPageRoute(builder: (context)=>Horoscope_Registration_Screen()));
     }else{
-      print("PERSONAL REGISTER ERROR");
+      LoadingOverlay.hide();
+      print("PERSONAL INFORMATION REGISTER ERROR");
       ShowToastMessage(Registration4Response?.message ?? "");
     }
  }

@@ -5,8 +5,10 @@ import 'package:vvmatrimony/Common_Widgets/Common_Button.dart';
 import 'package:vvmatrimony/Common_Widgets/Custom_App_Bar.dart';
 import 'package:vvmatrimony/Common_Widgets/Text_Form_Field.dart';
 import 'package:vvmatrimony/Src/Registration_Ui/Family_Registration_Screen/Personel_Registration_Screen.dart';
+import 'package:vvmatrimony/utilits/ApiProvider.dart';
 import 'package:vvmatrimony/utilits/ApiService.dart';
 import 'package:vvmatrimony/utilits/Common_Colors.dart';
+import 'package:vvmatrimony/utilits/Loading_Overlay.dart';
 import 'package:vvmatrimony/utilits/Text_Style.dart';
 
 import '../../../utilits/Generic.dart';
@@ -123,20 +125,23 @@ class _Community_Registration_ScreenState extends ConsumerState<Community_Regist
 
   Registartion3ApiResponse() async{
     final registration3ApiService = ApiService(ref.watch(dioProvider));
+    LoadingOverlay.show(context);
     var formDate = FormData.fromMap({
       'user_id':await getuserId(),
       'religion':religionVal,
       'mother_tongue':motherTongueVal,
       'caste':casteVal,
     });
-    final Registration3Response = await registration3ApiService.registrationService3(context,formDate);
+    final Registration3Response = await ref.watch(registration3Provider(formDate).future);
     print("FORM DATA :: ${formDate}");
     if(Registration3Response?.status == true){
+      LoadingOverlay.hide();
       ShowToastMessage(Registration3Response?.message ?? "");
       print("COMMUNITY REGISTRATION SUCESS");
       Navigator.push(context, MaterialPageRoute(builder: (context)=>Personel_Registration_Screen()));
 
     }else{
+      LoadingOverlay.hide();
       ShowToastMessage(Registration3Response?.message ?? "");
       print("COMMUNITY REGISTRATION ERROR");
     }

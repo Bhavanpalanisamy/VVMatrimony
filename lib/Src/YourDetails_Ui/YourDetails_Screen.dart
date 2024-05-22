@@ -11,11 +11,14 @@ import 'package:vvmatrimony/Common_Widgets/Text_Form_Field.dart';
 import 'package:vvmatrimony/Model/LoginModel.dart';
 import 'package:vvmatrimony/Src/OTP_Ui/OTP_Screen.dart';
 import 'package:vvmatrimony/Src/Registration_Ui/Family_Registration_Screen/Family_Registration_Screen.dart';
+import 'package:vvmatrimony/utilits/ApiProvider.dart';
 import 'package:vvmatrimony/utilits/ApiService.dart';
 import 'package:vvmatrimony/utilits/Common_Colors.dart';
 import 'package:vvmatrimony/utilits/ConstantsApi.dart';
 import 'package:vvmatrimony/utilits/Generic.dart';
 import 'package:vvmatrimony/utilits/Text_Style.dart';
+
+import '../../utilits/Loading_Overlay.dart';
 
 class Yourdetails extends ConsumerStatefulWidget {
   const Yourdetails({super.key});
@@ -252,7 +255,6 @@ class _YourdetailsState extends ConsumerState<Yourdetails> {
     );
   }
 Register1ApiResponse() async{
-    final register1ApiService =ApiService(ref.watch(dioProvider));
     var formData = FormData.fromMap({
       "name":_Name.text,
       "email":_email.text,
@@ -263,18 +265,19 @@ Register1ApiResponse() async{
       "about_you":_AboutYou.text
     });
     print("GENDER  ::: ${Gender}");
-    final Register1Response = await register1ApiService.registrationService(context, formData);
+    final Register1Response = await ref.watch(registration1Provider(formData).future);
+    LoadingOverlay.show(context);
     if(Register1Response?.status == true){
+      LoadingOverlay.hide();
       ShowToastMessage(Register1Response?.message ?? "");
-
       UserId(Register1Response?.userId ?? "");
       print("USER ID :: ${Register1Response?.userId ?? ""}");
       Navigator.push(context, MaterialPageRoute(builder: (context)=>OTP(mobileNumber: _MobileNumber.text, isPhoneVerification: true,)));
     }else{
+      LoadingOverlay.hide();
       ShowToastMessage(Register1Response?.message ?? "");
       print("ERROR");
     }
-
 }
 }
 

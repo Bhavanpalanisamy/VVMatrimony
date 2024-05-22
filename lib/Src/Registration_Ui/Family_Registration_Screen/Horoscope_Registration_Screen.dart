@@ -6,7 +6,9 @@ import 'package:vvmatrimony/Common_Widgets/Custom_App_Bar.dart';
 import 'package:vvmatrimony/Common_Widgets/Text_Form_Field.dart';
 //import 'package:vvmatrimony/Src/Registration_Ui/Family_Registration_Screen/Professional_Registration_Screen.dart';
 import 'package:vvmatrimony/Src/Registration_Ui/Family_Registration_Screen/Professional_Registration_Screen2.dart';
+import 'package:vvmatrimony/utilits/ApiProvider.dart';
 import 'package:vvmatrimony/utilits/Common_Colors.dart';
+import 'package:vvmatrimony/utilits/Loading_Overlay.dart';
 import 'package:vvmatrimony/utilits/Text_Style.dart';
 
 import '../../../utilits/ApiService.dart';
@@ -138,19 +140,25 @@ class _Horoscope_Registration_ScreenState extends ConsumerState<Horoscope_Regist
 
   Registartion5ApiResponse() async {
     final registration5ApiService = ApiService(ref.watch(dioProvider));
+    LoadingOverlay.show(context);
     var formdate = FormData.fromMap({
       'user_id': await getuserId(),
       'zodiac': zodiacVal,
       'star': starVal,
       'having_dosham': doshamVal,
     });
-    final Registration5Response = await registration5ApiService.registrationService5(context, formdate);
+    final Registration5Response = await ref.watch(registration5Provider(formdate).future);
     print("FORM DATA :: ${formdate}");
     if (Registration5Response?.status == true) {
+      LoadingOverlay.hide();
       ShowToastMessage(Registration5Response?.message ?? "");
       print("HOROSCOPE REGISTRATION SUCESS");
       Navigator.push(context, MaterialPageRoute(
           builder: (context) => Professional_Registration_Screen2()));
+    }else{
+      LoadingOverlay.hide();
+      print("HOROSCOPE REGISTER ERROR");
+      ShowToastMessage(Registration5Response?.message ?? "");
     }
   }
 }

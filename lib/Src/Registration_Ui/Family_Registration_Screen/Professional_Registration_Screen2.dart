@@ -2,7 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vvmatrimony/Src/Registration_Ui/Family_Registration_Screen/Expectation_Registration_Screen.dart';
+import 'package:vvmatrimony/utilits/ApiProvider.dart';
 import 'package:vvmatrimony/utilits/Common_Colors.dart';
+import 'package:vvmatrimony/utilits/Loading_Overlay.dart';
 
 import '../../../Common_Widgets/Common_Button.dart';
 import '../../../Common_Widgets/Custom_App_Bar.dart';
@@ -168,7 +170,7 @@ class _Professional_Registration_Screen2State extends ConsumerState<Professional
 
   Registartion6ApiResponse() async{
     final registration6ApiService = ApiService(ref.watch(dioProvider));
-    var fromdate = FormData.fromMap({
+    var fromdata = FormData.fromMap({
       'user_id':await getuserId(),
       'education':_Education.text,
       'employeed_in':employeeVal,
@@ -177,14 +179,17 @@ class _Professional_Registration_Screen2State extends ConsumerState<Professional
       'annual_income':_AnnualIncome.text,
       'work_location':_WorkLocation.text,
     });
-    final Registration6Response = await registration6ApiService.registrationService6(context,fromdate);
-    print("FORM DATA :: ${fromdate}");
+    final Registration6Response = await ref.watch(registration6Provider(fromdata).future);
+    LoadingOverlay.show(context);
+    print("FORM DATA :: ${fromdata}");
     if(Registration6Response?.status == true){
+      LoadingOverlay.hide();
       ShowToastMessage(Registration6Response?.message ?? "");
       print("PROFESSIONAL REGISTRATION SUCESS");
       Navigator.push(context, MaterialPageRoute(builder: (context)=>Expectation_Registration_Screen()));
 
     }else{
+      LoadingOverlay.hide();
       ShowToastMessage(Registration6Response?.message ?? "");
       print("PROFESSIONAL REGISTRATION ERROR");
     }
