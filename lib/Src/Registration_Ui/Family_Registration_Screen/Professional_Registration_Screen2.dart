@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vvmatrimony/Src/Registration_Ui/Family_Registration_Screen/Expectation_Registration_Screen.dart';
+import 'package:vvmatrimony/utilits/Common_Colors.dart';
 
 import '../../../Common_Widgets/Common_Button.dart';
 import '../../../Common_Widgets/Custom_App_Bar.dart';
@@ -33,6 +34,7 @@ class _Professional_Registration_Screen2State extends ConsumerState<Professional
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: backGroundColor,
       appBar: Custom_AppBar_Logo(title: '', actions: [], isNav: true,),
       body: Padding(
         padding: const EdgeInsets.only(left: 20,right: 20),
@@ -168,12 +170,12 @@ class _Professional_Registration_Screen2State extends ConsumerState<Professional
     final registration6ApiService = ApiService(ref.watch(dioProvider));
     var fromdate = FormData.fromMap({
       'user_id':await getuserId(),
-      'education':_Education,
+      'education':_Education.text,
       'employeed_in':employeeVal,
-      'company_name':_CompanyName,
-      'occupation':_Occupation,
-      'annual_income':_AnnualIncome,
-      'work_location':_WorkLocation,
+      'company_name':_CompanyName.text,
+      'occupation':_Occupation.text,
+      'annual_income':_AnnualIncome.text,
+      'work_location':_WorkLocation.text,
     });
     final Registration6Response = await registration6ApiService.registrationService6(context,fromdate);
     print("FORM DATA :: ${fromdate}");

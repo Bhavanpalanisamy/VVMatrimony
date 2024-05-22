@@ -69,7 +69,7 @@ class _Expectation_Registration_ScreenState extends ConsumerState<Expectation_Re
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         //PERSONAL
-        Head_Text(HeadText: "Tell about Some Personal"),
+        Head_Text(HeadText: "Tell About your Expectation"),
 
         //HEIGHT
         Title_Style(Title: 'Height', isStatus: null),
@@ -216,13 +216,13 @@ class _Expectation_Registration_ScreenState extends ConsumerState<Expectation_Re
     final registration7ApiService = ApiService(ref.watch(dioProvider));
     var fromdate = FormData.fromMap({
       'user_id':await getuserId(),
-      'exp_height': _Height,
-      'exp_weight':_Weight,
+      'exp_height': _Height.text,
+      'exp_weight':_Weight.text,
       'exp_maritial_status':martialVal,
-      'exp_education': _Education,
-      'exp_occupation':_Occupation,
-      'exp_salary':_Salary,
-      'exp_location':_Location,
+      'exp_education': _Education.text,
+      'exp_occupation':_Occupation.text,
+      'exp_salary':_Salary.text,
+      'exp_location':_Location.text,
     });
     final Registration7Response = await registration7ApiService.registrationService7(context,fromdate);
     print("FORM DATA :: ${fromdate}");

@@ -13,7 +13,9 @@ class ConstantApi {
   static String registrationUrl7 = SERVER_ONE + "authentication/registration7";
   static String registrationUrl4 = SERVER_ONE + "authentication/registration4";
   static String otpVerificationUrl = SERVER_ONE + "authentication/otp_verification";
+  static String phoneNumberVerificationUrl = SERVER_ONE + "authentication/phone_num_verification";
   static String otpResentUrl = SERVER_ONE + "authentication/resend_otp";
+  static String homeDashBaordUrl = SERVER_ONE + "matrimony/home";
 
 
   static String SOMETHING_WRONG = "Some thing wrong";

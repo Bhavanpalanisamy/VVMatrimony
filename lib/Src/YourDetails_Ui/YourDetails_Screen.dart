@@ -9,6 +9,7 @@ import 'package:vvmatrimony/Common_Widgets/Common_Button.dart';
 import 'package:vvmatrimony/Common_Widgets/Custom_App_Bar.dart';
 import 'package:vvmatrimony/Common_Widgets/Text_Form_Field.dart';
 import 'package:vvmatrimony/Model/LoginModel.dart';
+import 'package:vvmatrimony/Src/OTP_Ui/OTP_Screen.dart';
 import 'package:vvmatrimony/Src/Registration_Ui/Family_Registration_Screen/Family_Registration_Screen.dart';
 import 'package:vvmatrimony/utilits/ApiService.dart';
 import 'package:vvmatrimony/utilits/Common_Colors.dart';
@@ -268,7 +269,7 @@ Register1ApiResponse() async{
 
       UserId(Register1Response?.userId ?? "");
       print("USER ID :: ${Register1Response?.userId ?? ""}");
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>Family_Registration_Screen()));
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>OTP(mobileNumber: _MobileNumber.text, isPhoneVerification: true,)));
     }else{
       ShowToastMessage(Register1Response?.message ?? "");
       print("ERROR");

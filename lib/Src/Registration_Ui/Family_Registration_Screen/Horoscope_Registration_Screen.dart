@@ -23,9 +23,18 @@ class _Horoscope_Registration_ScreenState extends ConsumerState<Horoscope_Regist
   //ZODIAC
   String? zodiacVal;
   List<String> zodiacOption = [
-    "Scorpio",
-    "Cancer",
-    "Leo",
+    "Mesham",
+    "Risabham",
+    "Mithunam",
+    "Kadagam",
+    "Simmam",
+    "Kanni",
+    "Thulam",
+    "Viruchigam",
+    "Dhanushu",
+    "Magaram",
+    "Kumbham",
+    "Meenam",
   ];
 
   //STAR

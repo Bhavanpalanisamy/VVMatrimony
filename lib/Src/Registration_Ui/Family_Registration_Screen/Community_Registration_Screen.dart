@@ -128,7 +128,6 @@ class _Community_Registration_ScreenState extends ConsumerState<Community_Regist
       'religion':religionVal,
       'mother_tongue':motherTongueVal,
       'caste':casteVal,
-      'sub_caste':'none'
     });
     final Registration3Response = await registration3ApiService.registrationService3(context,formDate);
     print("FORM DATA :: ${formDate}");

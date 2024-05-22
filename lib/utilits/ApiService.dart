@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:vvmatrimony/Model/HomeDashBoardModel.dart';
 import 'package:vvmatrimony/Model/LoginModel.dart';
 
 
@@ -126,40 +127,34 @@ class ApiService {
     return _requestPOST2<T>(path, data: data);
   }
 
-  Future<T> loginUser<T>(context,String path, FormData data) async {
-    Dio dio = Dio();
+  //LOGIN API RESPONSE
+  Future<LoginModel> loginUser(FormData formData) async {
+    final result = await requestPOST(
+        url: ConstantApi.loginUrl, formData: formData, dio: _dio);
 
-    dio.options = BaseOptions(
-      baseUrl: ConstantApi.loginUrl, // Your base URL
-      validateStatus: (status) {
-        // Return true if the status code is between 200 and 299 (inclusive)
-        // Return false if you want to throw an error for this status code
-        return status! >= 200 && status < 300 || status == 404;
-      },
-    );
+    if (result["success"] == true) {
 
-    try {
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+      return LoginModel?.fromJson(result["response"]);
+    } else {
+      try {
 
-      Response response = await dio.post(path, data: data);
+        var resultval = LoginModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
 
-      // Handle successful response
+        print(result["response"]);
+        ShowToastMessage(result['response']);
 
-      print(response.data);
-      return _fromJson<T>(response.data);
-    } on DioException catch (e) {
-      if (e.response != null && e.response!.statusCode == 404) {
-        // Handle 404 error
-
-        print('Resource not found');
-        return _fromJson<T>(e.response!.data);
-      } else {
-        // Handle other Dio errors
-        print('Error: ${e.message}');
-        throw e;
+        // Toast.show(result["response"], context);
       }
     }
+    return LoginModel();
   }
-
+  //REGISTRATION API
   Future<LoginModel> registrationService(context,FormData formData) async {
     final result = await requestPOST(
         url: ConstantApi.registrationUrl1, formData: formData, dio: _dio);
@@ -252,7 +247,6 @@ class ApiService {
   }
 
   //PERSONAL INFORMATION API
-  //COMMUNITY REGISTRATION
   Future<LoginModel> registrationService4(context,FormData formData) async {
     final result = await requestPOST(
         url: ConstantApi.registrationUrl4, formData: formData, dio: _dio);
@@ -371,12 +365,10 @@ class ApiService {
   }
 
   //OTP VERIFICATION SCREEN
-  Future<LoginModel> otpApiService(context,FormData formData) async {
+  Future<LoginModel> otpApiService(FormData formData) async {
     final result = await requestPOST(
         url: ConstantApi.otpVerificationUrl, formData: formData, dio: _dio);
-    LoadingOverlay.show(context);
     if (result["success"] == true) {
-      LoadingOverlay.hide();
 
       print("resultOTP:$result");
       print("resultOTPsss:${result["success"]}");
@@ -384,13 +376,11 @@ class ApiService {
       return LoginModel?.fromJson(result["response"]);
     } else {
       try {
-        LoadingOverlay.hide();
         var resultval = LoginModel.fromJson(result["response"]);
         // Toast.show(resultval.message.toString(), context);
         print(result["response"]);
         return resultval;
       } catch (e) {
-        LoadingOverlay.hide();
         print(result["response"]);
 
         // Toast.show(result["response"], context);
@@ -400,6 +390,31 @@ class ApiService {
   }
 
   //OTP VERIFICATION SCREEN
+  Future<LoginModel> phoneApiService(FormData formData) async {
+    final result = await requestPOST(
+        url: ConstantApi.phoneNumberVerificationUrl, formData: formData, dio: _dio);
+    if (result["success"] == true) {
+
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+
+      return LoginModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = LoginModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+
+        // Toast.show(result["response"], context);
+      }
+    }
+    return LoginModel();
+  }
+
+  //RESEND OTP VERIFICATION SCREEN
   Future<LoginModel> resendOtpApiService(context,FormData formData) async {
     final result = await requestPOST(
         url: ConstantApi.otpResentUrl, formData: formData, dio: _dio);
@@ -426,6 +441,32 @@ class ApiService {
       }
     }
     return LoginModel();
+  }
+
+  //HOME DASH BOARD API RESPONSE
+  Future<HomeDashBoardModel> homeDashBoardApiService(FormData formData) async {
+    final result = await requestPOST(
+        url: ConstantApi.homeDashBaordUrl, formData: formData, dio: _dio);
+    if (result["success"] == true) {
+      LoadingOverlay.hide();
+
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+
+      return HomeDashBoardModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = HomeDashBoardModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+
+        // Toast.show(result["response"], context);
+      }
+    }
+    return HomeDashBoardModel();
   }
 
 }

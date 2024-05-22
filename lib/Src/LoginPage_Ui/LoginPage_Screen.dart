@@ -11,6 +11,7 @@ import 'package:vvmatrimony/Model/LoginModel.dart';
 import 'package:vvmatrimony/Src/Home_Dashboard_Ui/Home_Dashboard_Screen.dart';
 import 'package:vvmatrimony/Src/OTP_Ui/OTP_Screen.dart';
 import 'package:vvmatrimony/Src/YourDetails_Ui/YourDetails_Screen.dart';
+import 'package:vvmatrimony/utilits/ApiProvider.dart';
 import 'package:vvmatrimony/utilits/ApiService.dart';
 import 'package:vvmatrimony/utilits/Common_Colors.dart';
 import 'package:vvmatrimony/utilits/ConstantsApi.dart';
@@ -91,12 +92,10 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     );
   }
   LoginApiResponse() async{
-    final loginApiService = ApiService(ref.watch(dioProvider));
     var formData = FormData.fromMap({
       "mobile":_MobileNumber.text,
     });
-
-    final LoginResponse = await loginApiService.loginUser<LoginModel>(context,ConstantApi.loginUrl, formData);
+    final LoginResponse = await ref.watch(loginProvider(formData).future);
 
     LoadingOverlay.show(context);
 
@@ -105,7 +104,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       ShowToastMessage(LoginResponse?.message ?? "");
       UserId(LoginResponse?.userId ?? "");
       print("USER ID :: ${LoginResponse?.userId ?? ""}");
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>OTP(mobileNumber: _MobileNumber.text)));
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>OTP(mobileNumber: _MobileNumber.text, isPhoneVerification: false,)));
     }else{
       LoadingOverlay.hide();
       ShowToastMessage(LoginResponse?.message ?? "");

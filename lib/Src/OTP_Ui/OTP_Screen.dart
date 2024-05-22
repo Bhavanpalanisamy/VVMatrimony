@@ -7,15 +7,19 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vvmatrimony/Common_Widgets/Common_Button.dart';
 import 'package:vvmatrimony/Common_Widgets/Custom_App_Bar.dart';
 import 'package:vvmatrimony/Src/Home_Dashboard_Ui/Home_Dashboard_Screen.dart';
+import 'package:vvmatrimony/Src/Registration_Ui/Family_Registration_Screen/Family_Registration_Screen.dart';
 import 'package:vvmatrimony/Src/YourDetails_Ui/YourDetails_Screen.dart';
+import 'package:vvmatrimony/utilits/ApiProvider.dart';
 import 'package:vvmatrimony/utilits/ApiService.dart';
 import 'package:vvmatrimony/utilits/Common_Colors.dart';
+import 'package:vvmatrimony/utilits/ConstantsApi.dart';
 import 'package:vvmatrimony/utilits/Generic.dart';
 import 'package:vvmatrimony/utilits/Text_Style.dart';
 
 class OTP extends ConsumerStatefulWidget {
   final String mobileNumber;
-   OTP({super.key,required this.mobileNumber});
+  final bool isPhoneVerification;
+   OTP({super.key,required this.mobileNumber,required this.isPhoneVerification});
 
   @override
   ConsumerState<OTP> createState() => _OTPState();
@@ -23,7 +27,6 @@ class OTP extends ConsumerStatefulWidget {
 
 class _OTPState extends ConsumerState<OTP> {
   final _formkey = GlobalKey<FormState>();
-  TextEditingController _MobileNumber = TextEditingController();
 
 
 
@@ -122,7 +125,7 @@ class _OTPState extends ConsumerState<OTP> {
 
                 Code(text: 'Verification Code', style: Textfield_Style2),
                 Code(text: 'Please enter code we just send to', style: sub_ContentST),
-                Code1(text: '+91-1234567890', style: Textfield_Style1),
+                Code1(text: '+91-${widget.mobileNumber}', style: Textfield_Style1),
 
                 // OTP
                 Row(
@@ -188,16 +191,15 @@ class _OTPState extends ConsumerState<OTP> {
   }
   //OTP VERIFICATION API RESPONSE
   OtpVerificationApiResponse() async{
-    final otpApiService = ApiService(ref.watch(dioProvider));
     var formData = FormData.fromMap({
       "user_id":await getuserId(),
       "otp":"${_OTP1.text}${_OTP2.text}${_OTP3.text}${_OTP4.text}"
     });
-    final OtpResponse = await otpApiService.otpApiService(context, formData);
+   final OtpResponse = await ref.watch(widget.isPhoneVerification == true? phoneVerficationProvider(formData).future:otpVerificationProvider(formData).future);
     if(OtpResponse?.status == true){
       print("OTP VERIFICATION SUCCESS");
       ShowToastMessage(OtpResponse?.message ?? "");
-      Navigator.push(context, MaterialPageRoute(builder: (context) => HomeDashboard()));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => widget.isPhoneVerification == true?Family_Registration_Screen():HomeDashboard()));
     }else{
       print("OTP VERIFICATION ERROR");
       ShowToastMessage(OtpResponse?.message ?? "");

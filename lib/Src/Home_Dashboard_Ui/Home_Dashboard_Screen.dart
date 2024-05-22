@@ -1,33 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:vvmatrimony/Model/HomeDashBoardModel.dart';
 import 'package:vvmatrimony/Src/Profile_Description_Ui/Profile_Description_Screen.dart';
+import 'package:vvmatrimony/utilits/ApiProvider.dart';
 
 import '../../Common_Widgets/Common_List.dart';
 import '../../Common_Widgets/Custom_App_Bar.dart';
 import '../../utilits/Common_Colors.dart';
-class HomeDashboard extends StatefulWidget {
+class HomeDashboard extends ConsumerStatefulWidget {
   const HomeDashboard({super.key});
 
   @override
-  State<HomeDashboard> createState() => _HomeDashboardState();
+  ConsumerState<HomeDashboard> createState() => _HomeDashboardState();
 }
 
-class _HomeDashboardState extends State<HomeDashboard> {
+class _HomeDashboardState extends ConsumerState<HomeDashboard> {
   @override
   Widget build(BuildContext context) {
+    final HomeDashBoardResponse = ref.watch(homeDashBoardProvider);
     return Scaffold(
       backgroundColor: backGroundColor,
       appBar: Custom_AppBar(),
-      body: SingleChildScrollView(
-        child: Container(
-          width: MediaQuery.sizeOf(context).width,
-          child: _MainBody()
-
-        ),
-      ),
+      body: HomeDashBoardResponse.when(data: (HomeResponseData){
+        return SingleChildScrollView(
+          child: Container(
+              width: MediaQuery.sizeOf(context).width,
+              child: _MainBody(HomeResponseData)
+          ),
+        );
+      },  error: (Object error, StackTrace stackTrace) {
+        return Text(error.toString());
+      },
+        loading: () => null,
+      )
     );
   }
   //MAIN BODY
-  Widget _MainBody(){
+  Widget _MainBody(HomeDashBoardModel? homeResponseData){
     return Column(
       children: [
 
@@ -36,7 +45,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
         //PROFILE IMAGE
         Padding(
           padding: const EdgeInsets.only(bottom: 50),
-          child: _Profile_List(),
+          child: _Profile_List(homeResponseData),
         ),
 
       ],
@@ -60,12 +69,12 @@ Widget Banner (context){
   );
 }
 
-Widget _Profile_List(){
+Widget _Profile_List(HomeDashBoardModel? homeResponseData){
   return ListView.builder(
     shrinkWrap: true,
     physics: const NeverScrollableScrollPhysics(),
     scrollDirection: Axis.vertical,
-    itemCount: 10,
+    itemCount: homeResponseData?.data?.length ?? 0,
     itemBuilder: (BuildContext context, int index) {
       return //PROFILE
         Padding(
@@ -74,7 +83,12 @@ Widget _Profile_List(){
             onTap: (){
               Navigator.push(context, MaterialPageRoute(builder: (context)=>Profile_Description_Screen()));
             },
-              child: Profile_List(context,name: 'Bhavan', id: '17421', age: '20', location: 'CBE', job: 'Software')),
+              child: Profile_List(context,
+                  name: homeResponseData?.data?[index].name ?? "",
+                  id: homeResponseData?.data?[index].vvmId ?? "",
+                  age: homeResponseData?.data?[index].age ?? "",
+                  location: homeResponseData?.data?[index].workLocation ?? "",
+                  job: homeResponseData?.data?[index].occupation ?? "")),
         );
     },);
 }
