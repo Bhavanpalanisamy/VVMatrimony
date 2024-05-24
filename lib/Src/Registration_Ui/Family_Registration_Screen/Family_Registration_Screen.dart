@@ -5,9 +5,11 @@ import 'package:vvmatrimony/Common_Widgets/Common_Button.dart';
 import 'package:vvmatrimony/Common_Widgets/Custom_App_Bar.dart';
 import 'package:vvmatrimony/Common_Widgets/Text_Form_Field.dart';
 import 'package:vvmatrimony/Src/Registration_Ui/Family_Registration_Screen/Community_Registration_Screen.dart';
+import 'package:vvmatrimony/utilits/ApiProvider.dart';
 import 'package:vvmatrimony/utilits/ApiService.dart';
 import 'package:vvmatrimony/utilits/Common_Colors.dart';
 import 'package:vvmatrimony/utilits/Generic.dart';
+import 'package:vvmatrimony/utilits/Loading_Overlay.dart';
 import 'package:vvmatrimony/utilits/Text_Style.dart';
 
 
@@ -383,14 +385,16 @@ Registartion2ApiResponse() async{
    "unmarried_brother":UnmarriedBrotherVal,
  });
 
- final Registration2Response = await registration2ApiService.registrationService2(context,formData);
+ final Registration2Response = await ref.watch(registration2Provider(formData).future);
+ LoadingOverlay.show(context);
  print("FORM DATA :: ${formData}");
  if(Registration2Response?.status == true){
+   LoadingOverlay.hide();
      ShowToastMessage(Registration2Response?.message ?? "");
    print("FAMILY REGISTRATION SUCESS");
    Navigator.push(context, MaterialPageRoute(builder: (context)=>Community_Registration_Screen()));
-
  }else{
+   LoadingOverlay.hide();
    ShowToastMessage(Registration2Response?.message ?? "");
 
    print("FAMILY REGISTRATION ERROR");
