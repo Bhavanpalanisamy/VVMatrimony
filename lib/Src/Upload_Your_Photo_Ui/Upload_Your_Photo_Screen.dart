@@ -1,21 +1,27 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:vvmatrimony/Common_Widgets/Common_Button.dart';
 import 'package:vvmatrimony/Common_Widgets/Custom_App_Bar.dart';
 import 'package:vvmatrimony/Common_Widgets/Image_Path.dart';
+import 'package:vvmatrimony/Src/Profile_Completed_Ui/Profile_Completed_Screen.dart';
+import 'package:vvmatrimony/utilits/ApiProvider.dart';
 import 'package:vvmatrimony/utilits/Common_Colors.dart';
+import 'package:vvmatrimony/utilits/Generic.dart';
+import 'package:vvmatrimony/utilits/Loading_Overlay.dart';
 import 'package:vvmatrimony/utilits/Text_Style.dart';
 
-class Upload_Your_Photo_Screen extends StatefulWidget {
+class Upload_Your_Photo_Screen extends ConsumerStatefulWidget {
   const Upload_Your_Photo_Screen({super.key});
 
   @override
-  State<Upload_Your_Photo_Screen> createState() => _Upload_Your_Photo_ScreenState();
+  ConsumerState<Upload_Your_Photo_Screen> createState() => _Upload_Your_Photo_ScreenState();
 }
 
-class _Upload_Your_Photo_ScreenState extends State<Upload_Your_Photo_Screen> {
+class _Upload_Your_Photo_ScreenState extends ConsumerState<Upload_Your_Photo_Screen> {
   final ImagePicker _imagePicker = ImagePicker();
   List<XFile> _selectedImages = [];
   void _pickImage(ImageSource source) async {
@@ -122,7 +128,9 @@ class _Upload_Your_Photo_ScreenState extends State<Upload_Your_Photo_Screen> {
               //BUTTON
               Padding(
                 padding: const EdgeInsets.only(bottom: 50),
-                child: CommonElevatedButton(context, 'Continue', () { }),
+                child: CommonElevatedButton(context, 'Continue', () {
+                  UploadProfileResponse();
+                }),
               ),
             ],
           ),
@@ -200,6 +208,34 @@ class _Upload_Your_Photo_ScreenState extends State<Upload_Your_Photo_Screen> {
         ],
       ),
     );
+  }
+
+  //UPLOAD PROFILE PHOTO RESPONSE
+  UploadProfileResponse() async{
+    var formData = FormData.fromMap({
+      "user_id": await getuserId(),
+    });
+    for (XFile selectedImage in _selectedImages) {
+      formData.files.add(MapEntry(
+        'images[]',
+        await MultipartFile.fromFile(selectedImage.path!),
+      ));
+    }
+    final uploadProfileResponse =await  ref.watch(registration8Provider(formData).future);
+    LoadingOverlay.show(context);
+
+    if(uploadProfileResponse?.status == true){
+      LoadingOverlay.hide();
+
+      print("UPLOAD PHOTO SUCCESS");
+      ShowToastMessage(uploadProfileResponse?.message ?? "");
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>Profile_Completed_Screen()), (route) => false);
+    }else{
+      LoadingOverlay.hide();
+
+      print("UPLOAD PHOTO ERROR");
+      ShowToastMessage(uploadProfileResponse?.message ?? "");
+    }
   }
 }
 

@@ -14,6 +14,7 @@ import 'package:vvmatrimony/utilits/ApiService.dart';
 import 'package:vvmatrimony/utilits/Common_Colors.dart';
 import 'package:vvmatrimony/utilits/ConstantsApi.dart';
 import 'package:vvmatrimony/utilits/Generic.dart';
+import 'package:vvmatrimony/utilits/Loading_Overlay.dart';
 import 'package:vvmatrimony/utilits/Text_Style.dart';
 
 class OTP extends ConsumerStatefulWidget {
@@ -196,11 +197,17 @@ class _OTPState extends ConsumerState<OTP> {
       "otp":"${_OTP1.text}${_OTP2.text}${_OTP3.text}${_OTP4.text}"
     });
    final OtpResponse = await ref.watch(widget.isPhoneVerification == true? phoneVerficationProvider(formData).future:otpVerificationProvider(formData).future);
+    LoadingOverlay.show(context);
+
     if(OtpResponse?.status == true){
+      LoadingOverlay.hide();
+
       print("OTP VERIFICATION SUCCESS");
       ShowToastMessage(OtpResponse?.message ?? "");
       Navigator.push(context, MaterialPageRoute(builder: (context) => widget.isPhoneVerification == true?Family_Registration_Screen():HomeDashboard()));
     }else{
+      LoadingOverlay.hide();
+
       print("OTP VERIFICATION ERROR");
       ShowToastMessage(OtpResponse?.message ?? "");
     }
@@ -208,16 +215,21 @@ class _OTPState extends ConsumerState<OTP> {
 
   //OTP RESEND VERIFICATION
   ResendVerificationApiResponse() async{
-    final resendOtpApiService = ApiService(ref.watch(dioProvider));
     var formData = FormData.fromMap({
       "user_id":await getuserId(),
     });
-    final ResendOtpResponse = await resendOtpApiService.resendOtpApiService(context, formData);
+    final ResendOtpResponse = await ref.watch(resendOtpProvider(formData).future);
+    LoadingOverlay.show(context);
+
     if(ResendOtpResponse?.status == true){
+      LoadingOverlay.hide();
+
       print("RESEND OTP VERIFICATION SUCCESS");
       ShowToastMessage(ResendOtpResponse?.message ?? "");
       // Navigator.push(context, MaterialPageRoute(builder: (context) => HomeDashboard()));
     }else{
+      LoadingOverlay.hide();
+
       print("RESEND OTP VERIFICATION ERROR");
       ShowToastMessage(ResendOtpResponse?.message ?? "");
     }

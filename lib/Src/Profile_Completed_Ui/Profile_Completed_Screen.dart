@@ -41,7 +41,7 @@ class _Profile_Completed_ScreenState extends State<Profile_Completed_Screen> {
         Padding(
           padding: const EdgeInsets.only(bottom: 50),
           child: CommonElevatedButton(context, 'Go to Home', () {
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeDashboard()));
+            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomeDashboard()), (route) => false);
           }),
         )
       ],

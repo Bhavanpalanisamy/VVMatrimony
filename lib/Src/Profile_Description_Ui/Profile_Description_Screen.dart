@@ -1,45 +1,59 @@
-
-
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vvmatrimony/Common_Widgets/Common_Button.dart';
 import 'package:vvmatrimony/Common_Widgets/Custom_App_Bar.dart';
 import 'package:vvmatrimony/Common_Widgets/Image_Path.dart';
+import 'package:vvmatrimony/Model/UserDetailModel.dart';
+import 'package:vvmatrimony/utilits/ApiProvider.dart';
 import 'package:vvmatrimony/utilits/Common_Colors.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:vvmatrimony/utilits/Text_Style.dart';
 
 
-class Profile_Description_Screen extends StatefulWidget {
-  const Profile_Description_Screen({super.key});
+class Profile_Description_Screen extends ConsumerStatefulWidget {
+  final String uId;
+   Profile_Description_Screen({super.key, required this.uId});
 
   @override
-  State<Profile_Description_Screen> createState() => _Profile_Description_ScreenState();
+  ConsumerState<Profile_Description_Screen> createState() => _Profile_Description_ScreenState();
 }
 
-class _Profile_Description_ScreenState extends State<Profile_Description_Screen> {
+class _Profile_Description_ScreenState extends ConsumerState<Profile_Description_Screen> {
   int myCurrentPage = 0;
   @override
   Widget build(BuildContext context) {
+    var formData = FormData.fromMap({
+      "user_id":widget.uId,
+    });
+    final userDetailResponseData = ref.watch(userDetailProvider(formData));
     return Scaffold(
       backgroundColor: backGroundColor,
       appBar: Custom_AppBar_Logo(title: '', actions: null, isNav: true),
-      body: SingleChildScrollView(
-        child: Container(
-          width: MediaQuery.sizeOf(context).width,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              //CAROSEL IMAGE
-              _Carosel_ProfileImg(),
-              //PROFILE
-              Profile_Detail(context),
+      body: userDetailResponseData.when(data: (userData){
+        print("RESPOSNE :: ${userData?.data?.name ?? ""}");
+        return SingleChildScrollView(
+          child: Container(
+            width: MediaQuery.sizeOf(context).width,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                //CAROSEL IMAGE
+                _Carosel_ProfileImg(),
+                //PROFILE
+                Profile_Detail(context,userData),
 
-            ],
+              ],
+            ),
           ),
-        ),
-      ),
+        );
+      }, error: (Object error, StackTrace stackTrace) {
+        return Text(error.toString());
+      },
+        loading: () => null,
+      )
     );
   }
   //CAROSEL IMAGE
@@ -88,14 +102,14 @@ class _Profile_Description_ScreenState extends State<Profile_Description_Screen>
   }
   
   //PROFILE TITLE
- Widget Profile_Detail(context){
+ Widget Profile_Detail(context, UserDetailModel? userData){
     return   Padding(
       padding: const EdgeInsets.only(left: 20,right: 20,top: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          _Profile_Name(context, profileName: 'Priya Dharshini A'),
+          _Profile_Name(context, profileName: userData?.data?.name ?? ""),
           Profile_Id(Content: 'Profile ID', text: 'CMM125486'),
           Profile_Id(Content: 'Age', text: '26'),
 

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vvmatrimony/Model/HomeDashBoardModel.dart';
 import 'package:vvmatrimony/Src/Profile_Description_Ui/Profile_Description_Screen.dart';
 import 'package:vvmatrimony/utilits/ApiProvider.dart';
+import 'package:vvmatrimony/utilits/Loading_Overlay.dart';
 
 import '../../Common_Widgets/Common_List.dart';
 import '../../Common_Widgets/Custom_App_Bar.dart';
@@ -31,7 +32,7 @@ class _HomeDashboardState extends ConsumerState<HomeDashboard> {
       },  error: (Object error, StackTrace stackTrace) {
         return Text(error.toString());
       },
-        loading: () => null,
+        loading: () => Loader(context),
       )
     );
   }
@@ -81,7 +82,7 @@ Widget _Profile_List(HomeDashBoardModel? homeResponseData){
           padding: const EdgeInsets.only(top: 10),
           child: InkWell(
             onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>Profile_Description_Screen()));
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>Profile_Description_Screen(uId: homeResponseData?.data?[index].vvmId ?? "",)));
             },
               child: Profile_List(context,
                   name: homeResponseData?.data?[index].name ?? "",

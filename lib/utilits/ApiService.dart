@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vvmatrimony/Model/HomeDashBoardModel.dart';
+import 'package:vvmatrimony/Model/LogOutModel.dart';
 import 'package:vvmatrimony/Model/LoginModel.dart';
+import 'package:vvmatrimony/Model/UserDetailModel.dart';
 
 
 import 'ConstantsApi.dart';
@@ -28,7 +30,11 @@ class ApiService {
     if (json != null) {
       if (T == LoginModel) {
         return LoginModel.fromJson(json) as T;
+      }else if(T == HomeDashBoardModel){
+        return HomeDashBoardModel.fromJson(json) as T;
       }
+
+
     } else {
       final jsonResponse = {
         'status': false,
@@ -364,6 +370,31 @@ class ApiService {
     return LoginModel();
   }
 
+  //PROFILE PHOTO UPLOAD API SERVICE
+  Future<LoginModel> registrationService8(FormData formData) async {
+    final result = await requestPOST(
+        url: ConstantApi.registrationUrl8, formData: formData, dio: _dio);
+    if (result["success"] == true) {
+
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+
+      return LoginModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = LoginModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+
+        // Toast.show(result["response"], context);
+      }
+    }
+    return LoginModel();
+  }
+
   //OTP VERIFICATION SCREEN
   Future<LoginModel> otpApiService(FormData formData) async {
     final result = await requestPOST(
@@ -415,12 +446,10 @@ class ApiService {
   }
 
   //RESEND OTP VERIFICATION SCREEN
-  Future<LoginModel> resendOtpApiService(context,FormData formData) async {
+  Future<LoginModel> resendOtpApiService(FormData formData) async {
     final result = await requestPOST(
         url: ConstantApi.otpResentUrl, formData: formData, dio: _dio);
-    LoadingOverlay.show(context);
     if (result["success"] == true) {
-      LoadingOverlay.hide();
 
       print("resultOTP:$result");
       print("resultOTPsss:${result["success"]}");
@@ -448,7 +477,6 @@ class ApiService {
     final result = await requestPOST(
         url: ConstantApi.homeDashBaordUrl, formData: formData, dio: _dio);
     if (result["success"] == true) {
-      LoadingOverlay.hide();
 
       print("resultOTP:$result");
       print("resultOTPsss:${result["success"]}");
@@ -467,6 +495,57 @@ class ApiService {
       }
     }
     return HomeDashBoardModel();
+  }
+  //HOME DASH BOARD API RESPONSE
+  Future<LogOutModel> logOutApiService() async {
+    var formData = FormData.fromMap({
+      "user_id": await getuserId(),
+    });
+    final result = await requestPOST(
+        url: ConstantApi.logOutUrl, formData: formData, dio: _dio);
+    if (result["success"] == true) {
+
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+
+      return LogOutModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = LogOutModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+
+        // Toast.show(result["response"], context);
+      }
+    }
+    return LogOutModel();
+  }
+  //USERDETAIL API SERVICE
+  Future<UserDetailModel> userDetailApiService(FormData formData) async {
+    final result = await requestPOST(
+        url: ConstantApi.userDetailUrl, formData: formData, dio: _dio);
+    if (result["success"] == true) {
+
+      print("resultOTP:$result");
+      print("resultOTPsss:${result["success"]}");
+
+      return UserDetailModel?.fromJson(result["response"]);
+    } else {
+      try {
+        var resultval = UserDetailModel.fromJson(result["response"]);
+        // Toast.show(resultval.message.toString(), context);
+        print(result["response"]);
+        return resultval;
+      } catch (e) {
+        print(result["response"]);
+
+        // Toast.show(result["response"], context);
+      }
+    }
+    return UserDetailModel();
   }
 
 }

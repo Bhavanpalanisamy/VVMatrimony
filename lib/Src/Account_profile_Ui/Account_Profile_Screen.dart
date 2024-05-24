@@ -1,20 +1,24 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vvmatrimony/Src/LoginPage_Ui/LoginPage_Screen.dart';
 import 'package:vvmatrimony/Src/My_Favourites%20_Ui/My_Favourites_Screen.dart';
 import 'package:vvmatrimony/Src/Profile_Edit_Ui/Profile_Edit_Screen.dart';
+import 'package:vvmatrimony/utilits/ApiProvider.dart';
 import 'package:vvmatrimony/utilits/Common_Colors.dart';
+import 'package:vvmatrimony/utilits/Generic.dart';
+import 'package:vvmatrimony/utilits/Loading_Overlay.dart';
 import '../../Common_Widgets/Custom_App_Bar.dart';
 import '../../Common_Widgets/Image_Path.dart';
 import '../../utilits/Text_Style.dart';
-class Accountprofile extends StatefulWidget {
+class Accountprofile extends ConsumerStatefulWidget {
   const Accountprofile({super.key});
 
   @override
-  State<Accountprofile> createState() => _AccountprofileState();
+  ConsumerState<Accountprofile> createState() => _AccountprofileState();
 }
 
-class _AccountprofileState extends State<Accountprofile> {
+class _AccountprofileState extends ConsumerState<Accountprofile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,13 +50,30 @@ class _AccountprofileState extends State<Accountprofile> {
               Containers(context, text: 'Privacy Policy', image: ('Lock_Image.svg'), onTap: null),
               Containers(context, text: 'About', image: ('About_Frame.svg'), onTap: null),
               Containers(context, text: 'Logout', image: ('Logout_Frame.svg'), onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage()));
+                LogOutApiResposne();
               }),
           ],
           ),
         ),
       ),
     );
+  }
+  LogOutApiResposne() async{
+    final LogOutResponse = await ref.watch(logOutProvider.future);
+    LoadingOverlay.show(context);
+    if(LogOutResponse?.status == true){
+      LoadingOverlay.hide();
+
+      print("LOGOUT SUCCESS");
+      ShowToastMessage(LogOutResponse?.message ?? "");
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage()));
+
+    }else{
+      LoadingOverlay.hide();
+
+      print("LOGOUT ERROR");
+      ShowToastMessage(LogOutResponse?.message ?? "");
+    }
   }
 }
 

@@ -49,7 +49,7 @@ Widget _Profile_List(){
           padding: const EdgeInsets.only(top: 10),
           child: InkWell(
               onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>Profile_Description_Screen()));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>Profile_Description_Screen(uId: '',)));
               },
               child: Profile_List(context,name: 'Bhavan', id: '17421', age: '20', location: 'CBE', job: 'Software')),
         );

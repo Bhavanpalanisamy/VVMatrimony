@@ -5,6 +5,9 @@ import 'Common_Colors.dart';
 import 'Generic.dart';
 
 
+ Loader(context){
+  return LoadingOverlay.show(context);
+}
 class LoadingOverlay {
   static OverlayEntry? _overlayEntry;
 
